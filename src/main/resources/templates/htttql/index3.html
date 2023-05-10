@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Nhóm 4 </title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    
+    
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+   
+   
+   <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="/build/css/bhn.css" />
+	
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+
+      
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+   
+  </head>
+
+  <body class="nav-md">
+  	
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Nhóm 4 !</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img id="image" th:src="${session.anhNhanVien!=null ? '/employee/images/'+session.anhNhanVien : 'images/noimage.jpg'}" class="img-circle profile_img"
+                          alt="Ảnh Nhân viên">
+              </div>
+              <div class="profile_info">
+                <span>Xin chào,</span>
+                <h2 th:text="${session.tenNhanVien}"></h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li class="active"><a><i class="fa fa-bar-chart "></i> Báo cáo <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li class="current-page"><a th:href="@{/report/sales}">Bán hàng</a></li>
+                      <li><a th:href="@{/report/employees}">Nhân Viên</a></li>
+                    </ul>
+                  </li>
+                  <li><a th:href="@{/employee/list}"><i class="fa fa-group"></i> Quản lý Nhân viên </a>
+                    
+                  </li>
+                  <li><a th:href="@{/customer/list}"><i class="fa fa-group"></i> Quản lý Khách hàng </a>
+                    
+                  </li>
+                  
+                  <li><a><i class="fa fa-archive"></i> Quản lý Sản phẩm <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a th:href="@{/product/list}">Sản phẩm </a></li>
+                      <li><a th:href="@{/categories/list}">Danh mục Sản Phẩm</a></li>
+                    </ul>
+                  </li>
+                  <li><a th:href="@{/supplier/list}"><i class="fa fa-group"></i> Quản lý Nhà cung cấp </a>
+                    
+                  </li>
+                  <li><a th:href="@{/sell/list}"><i class="fa fa-money"></i> Quản lý Bán hàng </a>
+                    
+                  </li>
+                  <li><a th:href="@{/purchase/list}"><i class="fa fa-shopping-cart"></i> Quản lý Nhập hàng </a>
+                    
+                  </li>
+                  
+                </ul>
+              </div>
+              
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="nav toggle">
+                  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+                <nav class="nav navbar-nav">
+                <ul class=" navbar-right">
+                  <li class="nav-item dropdown open" style="padding-left: 15px;">
+                    <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" >
+                      <img id="image" th:src="${session.anhNhanVien!=null ? '/employee/images/'+session.anhNhanVien : 'images/noimage.jpg'}" 
+                          alt="Ảnh Nhân viên">[[${session.tenNhanVien}]]
+                    </a>
+                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                      <a class="dropdown-item"  th:href="@{/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    </div>
+                  </li>
+  
+                  <!-- <li role="presentation" class="nav-item dropdown open" >
+                    <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-envelope-o"></i>
+                      <span class="badge bg-green">6</span>
+                    </a>
+                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" >
+                      <li class="nav-item">
+                        <a class="dropdown-item">
+                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                          <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                          <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="dropdown-item">
+                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                          <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                          <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="dropdown-item">
+                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                          <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                          <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="dropdown-item">
+                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                          <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                          <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <div class="text-center">
+                          <a class="dropdown-item">
+                            <strong>See All Alerts</strong>
+                            <i class="fa fa-angle-right"></i>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </li> -->
+                </ul>
+              </nav>
+            </div>
+          </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <!-- <div class="row" style="display: inline-block;">
+            <div class=" top_tiles" style="margin: 10px 0;">
+              <div class="col-md-3 col-sm-3  tile">
+                <span>Total Sessions</span>
+                <h2>231,809</h2>
+                <span class="sparkline_one" style="height: 160px;">
+                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                  </span>
+              </div>
+              <div class="col-md-3 col-sm-3  tile">
+                <span>Total Revenue</span>
+                <h2>$ 231,809</h2>
+                <span class="sparkline_one" style="height: 160px;">
+                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                  </span>
+              </div>
+              <div class="col-md-3 col-sm-3  tile">
+                <span>Total Sessions</span>
+                <h2>231,809</h2>
+                <span class="sparkline_one" style="height: 160px;">
+                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 125px;"></canvas>
+                  </span> 
+              </div>
+              <div class="col-md-3 col-sm-3  tile">
+                <span>Total Sessions</span>
+                <h2>231,809</h2>
+                <span class="sparkline_one" style="height: 160px;">
+                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                  </span>
+              </div>
+            </div>
+          </div> -->
+            
+			
+			
+			
+			
+              
+			<div class="row">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Report <small>Sales</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                          </div>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                      <li class="nav-item ">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Date</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Month</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="profile" aria-selected="false">Quantity Sales</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="dashboard_graph" style="padding:0px">
+		                	<div class="nreport" >
+				                  <div class="row x_title1" >
+					                  <div class="col-md-6">
+					                    <h3 style="margin-left: 10px">Report by Date</h3>
+					                  </div>
+					                  
+					                  
+					                    <div  class="col-md-6" style="background: #fff; cursor: pointer; padding: 10px 10px 0px 0; display: inline-block;float:right;">
+					                      <i class="fa fa-calendar col-md-1" id="config-demo2" style="float:right;"></i>
+					                      <input type="text" id="config-demo" class="form-control col-md-8" th:field="${timeReport} " style="border-radius: 10px; float:right">
+					                      
+					                      
+					                      
+					                    </div>
+					                    <script type="text/javascript">
+									      $(document).ready(function() {
+									
+									        var options = {};
+									        options.showDropdowns = true;
+									        options.timePicker = true;
+									        options.timePickerSeconds = false;
+									        options.autoApply = true;
+									        options.ranges = {
+									              'Today': [moment(), moment()],
+									              'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+									              'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+									              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+									              'This Month': [moment().startOf('month'), moment().endOf('month')],
+									              'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+									          };
+									        options.linkedCalendars = true;
+									        options.autoUpdateInput = true;
+									        options.showCustomRangeLabel = true;
+									
+									          
+									          options.alwaysShowCalendars = true;
+									
+									          
+									          
+									          options.startDate = moment().subtract(6, 'days');
+									          options.endDate = moment();
+									
+									          options.opens = 'null';
+									
+									          
+									          options.drops = 'down';
+									
+									          
+									          options.buttonClasses = 'btn btn-sm';
+									
+									          
+									          options.applyClass = 'btn-success';
+									
+									          
+									          options.cancelClass = 'btn-default';
+									
+									          
+									
+									          $('#config-demo').daterangepicker(options, function(start, end, label) { console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')'); }).click();;
+									          
+									          $('#config-demo').on('apply.daterangepicker', (e, picker) => {
+										          console.log('NAM The value has changed.');
+										        });
+									      });
+									      
+									      </script>
+					                  
+					              </div>
+				                  <div class="x_content" style="padding: 0 3px 6px 0px; margin-top: 0px;">
+				                  	<div id="container1"></div>
+								  </div>
+							 </div>
+							 
+		                  
+							<script
+								src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+							<!-- Latest compiled and minified JavaScript -->
+							<script
+								src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+							<script src="https://code.highcharts.com/highcharts.js"></script>
+							<script src="https://code.highcharts.com/modules/exporting.js"></script>
+							<script th:inline="javascript">
+						    $(function(){
+						    	Highcharts.chart('container1', {
+						    		  chart: {
+						    		    zoomType: 'xy'
+						    		  },
+						    		  title: {
+						    		    text: '',
+						    		    align: 'left'
+						    		  },
+						    		  xAxis: [{
+						    		    categories: [[${keySet1}]],
+						    		    crosshair: true
+						    		  }],
+						    		  yAxis: [{ // Primary yAxis
+						    		    labels: {
+						    		      format: '{value} $',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[1]
+						    		      }
+						    		    },
+						    		    title: {
+						    		      text: 'Revenue',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[1]
+						    		      }
+						    		    },
+						    		    opposite: true
+		
+						    		  }, { // Secondary yAxis
+						    		    gridLineWidth: 0,
+						    		    title: {
+						    		      text: 'Quantity',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[0]
+						    		      }
+						    		    },
+						    		    labels: {
+						    		      format: '{value}',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[0]
+						    		      }
+						    		    }
+		
+						    		  }],
+						    		  tooltip: {
+						    		    shared: true
+						    		  },
+						    		  legend: {
+						    		    layout: 'vertical',
+						    		    align: 'left',
+						    		    x: 80,
+						    		    verticalAlign: 'top',
+						    		    y: 55,
+						    		    floating: true,
+						    		    backgroundColor:
+						    		      Highcharts.defaultOptions.legend.backgroundColor || // theme
+						    		      'rgba(255,255,255,0.25)'
+						    		  },
+						    		  series: [{
+						    		    name: 'Quantity',
+						    		    type: 'column',
+						    		    yAxis: 1,
+						    		    data: [[${values1}]],
+						    		    tooltip: {
+						    		      valueSuffix: ''
+						    		    }
+		
+						    		  }, {
+						    		    name: 'Revenue',
+						    		    type: 'spline',
+						    		    data: [[${values2}]],
+						    		    tooltip: {
+						    		      valueSuffix: ' $'
+						    		    }
+						    		  }],
+						    		  responsive: {
+						    		    rules: [{
+						    		      condition: {
+						    		        maxWidth: 500
+						    		      },
+						    		      chartOptions: {
+						    		        legend: {
+						    		          floating: false,
+						    		          layout: 'horizontal',
+						    		          align: 'center',
+						    		          verticalAlign: 'bottom',
+						    		          x: 0,
+						    		          y: 0
+						    		        },
+						    		        yAxis: [{
+						    		          labels: {
+						    		            align: 'right',
+						    		            x: 0,
+						    		            y: -6
+						    		          },
+						    		          showLastLabel: false
+						    		        }, {
+						    		          labels: {
+						    		            align: 'left',
+						    		            x: 0,
+						    		            y: -6
+						    		          },
+						    		          showLastLabel: false
+						    		        }, {
+						    		          visible: false
+						    		        }]
+						    		      }
+						    		    }]
+						    		  }
+						    		});
+						    	
+						    	
+						  
+						   });
+						</script>
+		                </div>
+                      </div>
+                      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="dashboard_graph" style="padding:0px">
+							 <div class="nreport" style="margin-bottom: 100px;">
+								  <div class="row x_title2">
+					                  <div class="col-md-6">
+					                    <h3 style="margin-left: 10px">Report by Month</h3>
+					                  </div>
+					                  <div class="col-md-6">
+					                    <div class="row">
+					                    	<label for="fromDate" style="display:inline; padding-right: 10px" >From</label>
+											<input id="fromDate" type="text"  autocomplete="off"
+											               class="form-control ui-monthpicker col-5"
+											               aria-label="from-date" aria-describedby="from-date" />
+											<label for="toDate" style="display:inline; padding-left: 20px; padding-right: 10px">to</label>
+											<input id="toDate" type="text" autocomplete="off"
+											               class="form-control ui-monthpicker col-5"
+											               aria-label="to-date" aria-describedby="to-date" />
+					                    </div>
+					                    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  										<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+					                    <script>
+										    let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August",
+										        "September", "October", "November", "December"];
+										    var monthNumber = {}
+										    for (var i = 0; i < monthNames.length; ++i) {
+										        monthNumber[monthNames[i]] = i;
+										    }
+										
+										    $(document).ready(function () {
+										
+										        $('.ui-monthpicker').datepicker({
+										            changeMonth: true,
+										            changeYear: true,
+										            maxDate: "+0D",
+										            dateFormat: 'MM yy',
+										            showButtonPanel: true,
+										            beforeShow: function() {
+										                if ((selDate = $(this).val()).length > 0)
+										                {
+										                    iYear = selDate.substring(selDate.length - 4, selDate.length);
+										                    iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5),
+										                            $(this).datepicker('option', 'monthNames'));
+										                    $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+										                    $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+										                }
+										            },
+										            onClose: function() {
+										                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+										                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+										                // If they don't like the long month format, change the line below to 'M yy'
+										                $(this).val($.datepicker.formatDate('MM yy', new Date(year, month, 1)));
+										
+										                if ($(this).attr("id") == "fromDate") {
+										                    let fromDate = $("#fromDate").val();
+										                    let start = fromDate.split(' ');
+										                    $('#toDate').datepicker("option", "minDate", new Date(start[1], monthNumber[start[0]]));
+										                }
+										            }
+										        });
+										        $('.ui-monthpicker').datepicker("option", "minDate", new Date(2006, 6));
+										    })
+										</script>
+					                  </div>
+					              </div>
+					              <div class="x_content" style="padding: 0 3px 6px 0px; margin-top: 0px;">
+				                  	<div id="container2"></div>
+								  </div>
+					         </div>
+						  
+						 
+		                  
+							<script
+								src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+							<!-- Latest compiled and minified JavaScript -->
+							<script
+								src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+							<script src="https://code.highcharts.com/highcharts.js"></script>
+							<script src="https://code.highcharts.com/modules/exporting.js"></script>
+							<script th:inline="javascript">
+						    $(function(){
+						    	
+						    	
+						    	Highcharts.chart('container2', {
+						    		  chart: {
+						    		    zoomType: 'xy'
+						    		  },
+						    		  title: {
+						    		    text: '',
+						    		    align: 'left'
+						    		  },
+						    		  xAxis: [{
+						    		    categories: [[${keySet3}]],
+						    		    crosshair: true
+						    		  }],
+						    		  yAxis: [{ // Primary yAxis
+						    		    labels: {
+						    		      format: '{value} $',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[1]
+						    		      }
+						    		    },
+						    		    title: {
+						    		      text: 'Revenue',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[1]
+						    		      }
+						    		    },
+						    		    opposite: true
+		
+						    		  }, { // Secondary yAxis
+						    		    gridLineWidth: 0,
+						    		    title: {
+						    		      text: 'Quantity',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[0]
+						    		      }
+						    		    },
+						    		    labels: {
+						    		      format: '{value}',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[0]
+						    		      }
+						    		    }
+		
+						    		  }],
+						    		  tooltip: {
+						    		    shared: true
+						    		  },
+						    		  legend: {
+						    		    layout: 'vertical',
+						    		    align: 'left',
+						    		    x: 80,
+						    		    verticalAlign: 'top',
+						    		    y: 55,
+						    		    floating: true,
+						    		    backgroundColor:
+						    		      Highcharts.defaultOptions.legend.backgroundColor || // theme
+						    		      'rgba(255,255,255,0.25)'
+						    		  },
+						    		  series: [{
+						    		    name: 'Quantity',
+						    		    type: 'column',
+						    		    yAxis: 1,
+						    		    data: [[${values3}]],
+						    		    tooltip: {
+						    		      valueSuffix: ''
+						    		    }
+		
+						    		  }, {
+						    		    name: 'Revenue',
+						    		    type: 'spline',
+						    		    data: [[${values4}]],
+						    		    tooltip: {
+						    		      valueSuffix: ' $'
+						    		    }
+						    		  }],
+						    		  responsive: {
+						    		    rules: [{
+						    		      condition: {
+						    		        maxWidth: 500
+						    		      },
+						    		      chartOptions: {
+						    		        legend: {
+						    		          floating: false,
+						    		          layout: 'horizontal',
+						    		          align: 'center',
+						    		          verticalAlign: 'bottom',
+						    		          x: 0,
+						    		          y: 0
+						    		        },
+						    		        yAxis: [{
+						    		          labels: {
+						    		            align: 'right',
+						    		            x: 0,
+						    		            y: -6
+						    		          },
+						    		          showLastLabel: false
+						    		        }, {
+						    		          labels: {
+						    		            align: 'left',
+						    		            x: 0,
+						    		            y: -6
+						    		          },
+						    		          showLastLabel: false
+						    		        }, {
+						    		          visible: false
+						    		        }]
+						    		      }
+						    		    }]
+						    		  }
+						    		});
+						  
+						   });
+						</script>
+		                </div>
+                      </div>
+                      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="dashboard_graph" style="padding:0px">
+		                	<div class="nreport" >
+				                  <div class="row x_title1" >
+					                  <div class="col-md-6">
+					                    <h3 style="margin-left: 10px">Report by Date</h3>
+					                  </div>
+					                  
+					                  
+					                    <div  class="col-md-6" style="background: #fff; cursor: pointer; padding: 10px 10px 0px 0; display: inline-block;float:right;">
+					                      <i class="fa fa-calendar col-md-1" id="config-demo2" style="float:right;"></i>
+					                      <input type="text" id="config-demo" class="form-control col-md-8" th:field="${timeReport} " style="border-radius: 10px; float:right">
+					                      
+					                      
+					                      
+					                    </div>
+					                    <script type="text/javascript">
+									      $(document).ready(function() {
+									
+									        var options = {};
+									        options.showDropdowns = true;
+									        options.timePicker = true;
+									        options.timePickerSeconds = false;
+									        options.autoApply = true;
+									        options.ranges = {
+									              'Today': [moment(), moment()],
+									              'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+									              'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+									              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+									              'This Month': [moment().startOf('month'), moment().endOf('month')],
+									              'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+									          };
+									        options.linkedCalendars = true;
+									        options.autoUpdateInput = true;
+									        options.showCustomRangeLabel = true;
+									
+									          
+									          options.alwaysShowCalendars = true;
+									
+									          
+									          
+									          options.startDate = moment().subtract(6, 'days');
+									          options.endDate = moment();
+									
+									          options.opens = 'null';
+									
+									          
+									          options.drops = 'down';
+									
+									          
+									          options.buttonClasses = 'btn btn-sm';
+									
+									          
+									          options.applyClass = 'btn-success';
+									
+									          
+									          options.cancelClass = 'btn-default';
+									
+									          
+									
+									          $('#config-demo').daterangepicker(options, function(start, end, label) { console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')'); }).click();;
+									          
+									          $('#config-demo').on('apply.daterangepicker', (e, picker) => {
+										          console.log('NAM The value has changed.');
+										        });
+									      });
+									      
+									      </script>
+					                  
+					              </div>
+				                  <div class="x_content" style="padding: 0 3px 6px 0px; margin-top: 0px;">
+				                  	<div id="container1"></div>
+								  </div>
+							 </div>
+							 
+		                  
+							<script
+								src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+							<!-- Latest compiled and minified JavaScript -->
+							<script
+								src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+							<script src="https://code.highcharts.com/highcharts.js"></script>
+							<script src="https://code.highcharts.com/modules/exporting.js"></script>
+							<script th:inline="javascript">
+						    $(function(){
+						    	Highcharts.chart('container1', {
+						    		  chart: {
+						    		    zoomType: 'xy'
+						    		  },
+						    		  title: {
+						    		    text: '',
+						    		    align: 'left'
+						    		  },
+						    		  xAxis: [{
+						    		    categories: [[${keySet1}]],
+						    		    crosshair: true
+						    		  }],
+						    		  yAxis: [{ // Primary yAxis
+						    		    labels: {
+						    		      format: '{value} $',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[1]
+						    		      }
+						    		    },
+						    		    title: {
+						    		      text: 'Revenue',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[1]
+						    		      }
+						    		    },
+						    		    opposite: true
+		
+						    		  }, { // Secondary yAxis
+						    		    gridLineWidth: 0,
+						    		    title: {
+						    		      text: 'Quantity',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[0]
+						    		      }
+						    		    },
+						    		    labels: {
+						    		      format: '{value}',
+						    		      style: {
+						    		        color: Highcharts.getOptions().colors[0]
+						    		      }
+						    		    }
+		
+						    		  }],
+						    		  tooltip: {
+						    		    shared: true
+						    		  },
+						    		  legend: {
+						    		    layout: 'vertical',
+						    		    align: 'left',
+						    		    x: 80,
+						    		    verticalAlign: 'top',
+						    		    y: 55,
+						    		    floating: true,
+						    		    backgroundColor:
+						    		      Highcharts.defaultOptions.legend.backgroundColor || // theme
+						    		      'rgba(255,255,255,0.25)'
+						    		  },
+						    		  series: [{
+						    		    name: 'Quantity',
+						    		    type: 'column',
+						    		    yAxis: 1,
+						    		    data: [[${values1}]],
+						    		    tooltip: {
+						    		      valueSuffix: ''
+						    		    }
+		
+						    		  }, {
+						    		    name: 'Revenue',
+						    		    type: 'spline',
+						    		    data: [[${values2}]],
+						    		    tooltip: {
+						    		      valueSuffix: ' $'
+						    		    }
+						    		  }],
+						    		  responsive: {
+						    		    rules: [{
+						    		      condition: {
+						    		        maxWidth: 500
+						    		      },
+						    		      chartOptions: {
+						    		        legend: {
+						    		          floating: false,
+						    		          layout: 'horizontal',
+						    		          align: 'center',
+						    		          verticalAlign: 'bottom',
+						    		          x: 0,
+						    		          y: 0
+						    		        },
+						    		        yAxis: [{
+						    		          labels: {
+						    		            align: 'right',
+						    		            x: 0,
+						    		            y: -6
+						    		          },
+						    		          showLastLabel: false
+						    		        }, {
+						    		          labels: {
+						    		            align: 'left',
+						    		            x: 0,
+						    		            y: -6
+						    		          },
+						    		          showLastLabel: false
+						    		        }, {
+						    		          visible: false
+						    		        }]
+						    		      }
+						    		    }]
+						    		  }
+						    		});
+						    	
+						    	
+						  
+						   });
+						</script>
+		                </div>
+                    </div>
+                    <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="dashboard_graph" style="padding:0px">
+		                	<div class="nreport" >
+				                  <div class="row x_title1" >
+					                  <div class="col-md-6">
+					                    <!-- <h3 style="margin-left: 10px">Report by Date</h3> -->
+					                  </div>
+					                  
+					                  
+					                  
+					                  
+					              </div>
+				                  <div class="x_content" style="padding: 0 3px 6px 0px; margin-top: 0px;">
+				                  	<div id="container3"></div>
+								  </div>
+							 </div>
+							 
+		                  
+							<script
+								src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+							<!-- Latest compiled and minified JavaScript -->
+							<script
+								src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+							<script src="https://code.highcharts.com/highcharts.js"></script>
+							<script src="https://code.highcharts.com/modules/exporting.js"></script>
+							<script th:inline="javascript">
+							Highcharts.chart('container3', {
+							    chart: {
+							        type: 'column'
+							    },
+							    title: {
+							        text: 'Quantity Sales'
+							    },
+							    xAxis: {
+							        categories: [[${salesQuantityKey}]],
+							        crosshair: true
+							    },
+							    yAxis: {
+							        min: 0,
+							        title: {
+							            text: ''
+							        }
+							    },
+							    tooltip: {
+							        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+							        pointFormat: '<tr><td style="color:{series.color};padding:0"></td>' +
+							            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+							        footerFormat: '</table>',
+							        shared: true,
+							        useHTML: true
+							    },
+							    plotOptions: {
+							        column: {
+							            pointPadding: 0.2,
+							            borderWidth: 0
+							        }
+							    },
+							    series: [{
+							        name: "Quantity Sales",
+							        data: [[${salesQuantityValue}]]
+
+							    }]
+							});
+						</script>
+		                </div>
+                    </div>
+                  </div>
+                </div>
+              
+			</div>
+            
+            
+                    </div>
+                  </div>
+                </div>
+			
+			
+			
+
+            
+          </div>
+          
+        
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+   <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- jQuery Sparklines -->
+    <script src="/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+    <!-- morris.js -->
+    <script src="/vendors/raphael/raphael.min.js"></script>
+    <script src="/vendors/morris.js/morris.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- Skycons -->
+    <script src="/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/vendors/Flot/jquery.flot.js"></script>
+    <script src="/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/vendors/DateJS/build/date.js"></script>
+    <!-- bootstrap-daterangepicker -->
+
+    <!-- Custom Theme Scripts -->
+    <script src="/build/js/custom.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  </body>
+</html>
