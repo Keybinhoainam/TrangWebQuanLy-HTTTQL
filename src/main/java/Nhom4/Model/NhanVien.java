@@ -24,6 +24,7 @@ public class NhanVien {
 	String ten;
 	@Temporal(TemporalType.DATE)
 	Date ngaySinh;
+	String hinhAnh;
 	String sdt;
 	@Column(columnDefinition = "nvarchar(100) not null")
 	String diaChi;
@@ -114,6 +115,12 @@ public class NhanVien {
 	}
 	public void setAbout(String about) {
 		this.about = about;
+	}
+	public String getHinhAnh() {
+		return hinhAnh;
+	}
+	public void setHinhAnh(String hinhAnh) {
+		this.hinhAnh = hinhAnh;
 	}
 	
 	

@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,7 @@ import Nhom4.Model.ChiTietHDNhap;
 import Nhom4.Model.ChiTietHoaDonBan;
 import Nhom4.Model.HoaDonBan;
 import Nhom4.Model.HoaDonNhap;
+import Nhom4.Model.NhanVien;
 import Nhom4.Model.SanPham;
 import Nhom4.Responsitory.ChiTietHoaDonNhapRespository;
 import Nhom4.Responsitory.HoaDonBanRespository;
@@ -49,7 +52,8 @@ public class Controller {
 	HoaDonNhapRespository hoaDonNhapRespository;
 	@Autowired
 	ChiTietHoaDonNhapRespository chiTietHoaDonNhapRespository;
-	
+	@Autowired
+	HttpSession session ;
 	@PostMapping(value = "/add")
     public Long addInvoice(ModelMap model, @RequestBody HoaDonBanDTO hdb)
     {
@@ -73,7 +77,9 @@ public class Controller {
 		h.setTrangThai(hdb.getTrangThai());
 		h.setKhachHang(khachHangService.getById(hdb.getKhachHang().getId()));
 		h.setTongTien(tongTien);
-		
+		NhanVien nv= new NhanVien();
+		nv.setId((Long) session.getAttribute("nhanVienId"));
+		h.setNhanVien(nv);
 		HoaDonBan x = hoaDonBanService.save(h);
 		
 		System.out.println(x);
@@ -107,7 +113,9 @@ public class Controller {
 		h.setTrangThai(hdn.getTrangThai());
 		h.setNhaCungCap(nhaCungCapRespository.getById(hdn.getNhaCungCap().getId()));
 		h.setTongTien(tongTien);
-		
+		NhanVien nv= new NhanVien();
+		nv.setId((Long) session.getAttribute("nhanVienId"));
+		h.setNhanVien(nv);
 		HoaDonNhap x = hoaDonNhapRespository.save(h);
 		
 		System.out.println(x);

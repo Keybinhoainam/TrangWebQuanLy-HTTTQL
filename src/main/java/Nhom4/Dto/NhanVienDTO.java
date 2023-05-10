@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 public class NhanVienDTO {
 	Long id;
@@ -23,12 +25,14 @@ public class NhanVienDTO {
 	String ngaySinh;
 	String sdt;
 	String diaChi;
+	String hinhAnh;
 	String role;
 	String about;
 	Boolean isEdit=false;
 	private Set<LuongThangDTO> listLuongThang;
 	private Set<HoaDonNhapDTO> listHoaDonNhap;
 	private Set<HoaDonBanDTO> listHoaDonBan;
+	private MultipartFile imageFile;
 	public NhanVienDTO() {
 		super();
 	}
@@ -106,6 +110,18 @@ public class NhanVienDTO {
 	}
 	public void setIsEdit(Boolean isEdit) {
 		this.isEdit = isEdit;
+	}
+	public String getHinhAnh() {
+		return hinhAnh;
+	}
+	public void setHinhAnh(String hinhAnh) {
+		this.hinhAnh = hinhAnh;
+	}
+	public MultipartFile getImageFile() {
+		return imageFile;
+	}
+	public void setImageFile(MultipartFile imageFile) {
+		this.imageFile = imageFile;
 	}
 	
 	

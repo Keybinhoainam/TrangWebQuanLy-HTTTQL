@@ -33,20 +33,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Nhom4.Dto.NhanVienDTO;
 import Nhom4.Exception.StorageException;
+import Nhom4.Exception.StoreFileNotFoundException;
 import Nhom4.Model.NhanVien;
+import Nhom4.Model.TaiKhoan;
+import Nhom4.Responsitory.TaiKhoanRespository;
 import Nhom4.Service.NhanVienService;
 import Nhom4.Service.StorageService;
+import Nhom4.Service.TaiKhoanService;
 
 
 
 
 
 @Controller
-@RequestMapping("/employee/")
+@RequestMapping("/admin/employee/")
 public class NhanVienController {
 	@Autowired
 	NhanVienService nhanVienService;
-	
+	@Autowired
+	TaiKhoanRespository taiKhoanService;
 	@Autowired
 	StorageService storageService;
 	
@@ -63,7 +68,8 @@ public class NhanVienController {
 	@GetMapping("add")
 	public String add(Model model) {
 		model.addAttribute("nhanVien", new NhanVienDTO());
-		return "htttql/ListEmployee";
+		model.addAttribute("taiKhoan", new TaiKhoan());
+		return "htttql/NhanVienAddorEdit";
 	}
 	@GetMapping("edit/{employeeId}")
 	public String edit(Model model, @PathVariable("employeeId") Long employeeId) {
@@ -72,23 +78,38 @@ public class NhanVienController {
 		if(opt.isPresent()) {
 			NhanVien p=opt.get();
 			BeanUtils.copyProperties(p, dtop);
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
-            String date = dateFormat.format(p.getNgaySinh());  
+			if(dtop.getHinhAnh()=="") dtop.setHinhAnh(null);
+            dtop.setNgaySinh(p.getNgaySinh().toString());
 			dtop.setIsEdit(true);
+			List<TaiKhoan> taiKhoans=taiKhoanService.findByNhanVien(p.getId()) ;
+			TaiKhoan taiKhoan;
+			if(taiKhoans.isEmpty()) {
+				taiKhoan= new TaiKhoan();
+			}
+			else taiKhoan= taiKhoans.get(0);
+			System.out.println(taiKhoan);
+			model.addAttribute("taiKhoan",taiKhoan );
 			model.addAttribute("nhanVien", dtop);
 			return "htttql/NhanVienAddorEdit";
 		}
 		model.addAttribute("mes", "Product is Empty");
-		return "forward: /employee/list";
+		return "forward: /admin/employee/list";
 	}
 	@PostMapping("saveOrUpdate")
 	public ModelAndView saveorupdate(ModelMap model,
-			@Valid @ModelAttribute("nhanVien") NhanVienDTO dto,BindingResult result) throws StorageException, ParseException {
+			@Valid @ModelAttribute("nhanVien") NhanVienDTO dto,@ModelAttribute("taiKhoan") TaiKhoan tk,BindingResult result) throws StorageException, ParseException {
 		
 		if(result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return new ModelAndView("htttql/NhanVienAddorEdit",model);
 			
+		}
+		Optional<TaiKhoan> tkopt=taiKhoanService.findById(tk.getUserName());
+		if(tkopt.isPresent()&& tkopt.get().getNhanVien().getId() != dto.getId()) {
+			model.addAttribute("mes","Username invaid!!!" );
+			model.addAttribute("taiKhoan",tk );
+			model.addAttribute("nhanVien", dto);
+			return new ModelAndView("htttql/NhanVienAddorEdit",model) ;
 		}
 		NhanVien p=new NhanVien();
 		
@@ -106,22 +127,34 @@ public class NhanVienController {
 //		if(p.getSoLuong()==0) {
 //			p.setIsshow(false);
 //		}
-		
+		if(!dto.getImageFile().isEmpty()) {
+			UUID uuid=UUID.randomUUID();
+			String uuString=uuid.toString();
+			p.setHinhAnh(storageService.getStoredFilename(dto.getImageFile(), uuString));
+			storageService.store(dto.getImageFile(), p.getHinhAnh());
+		}
+		else {
+			p.setHinhAnh(dto.getHinhAnh());
+		}
 		
 		nhanVienService.save(p);
+		System.out.println(p.getId());
+		tk.setNhanVien(p);
+		taiKhoanService.save(tk);
 		model.addAttribute("mes", "Employee is saved");
-		return new ModelAndView("redirect:/employee/list",model);
+		return new ModelAndView("redirect:/admin/employee/list",model);
 	}
 
-	/*
-	 * @GetMapping("/images/{filename:.+}")
-	 * 
-	 * @ResponseBody public ResponseEntity<Resource> serveFile(@PathVariable String
-	 * filename) throws StoreFileNotFoundException{ Resource
-	 * file=storageService.loadAsResource(filename); return
-	 * ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-	 * "attachment; filename=\"" +file.getFilename()+"\"").body(file); }
-	 */
+	
+	 @GetMapping("/images/{filename:.+}")
+	 
+	 @ResponseBody public ResponseEntity<Resource> serveFile(@PathVariable String
+		 filename) throws StoreFileNotFoundException{ 
+		 Resource file=storageService.loadAsResource(filename); return
+		 ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+		 "attachment; filename=\"" +file.getFilename()+"\"").body(file); 
+		 }
+	
 	@GetMapping("delete/{nhanVienId}")
 	public String delete(Model model, @PathVariable("nhanVienId") Long nhanVienId) {
 		Optional<NhanVien> opt=nhanVienService.findById(nhanVienId);
@@ -129,10 +162,10 @@ public class NhanVienController {
 		if(opt.isPresent()) {
 			nhanVienService.deleteById(nhanVienId);
 			model.addAttribute("mes", "Employee is Deleted");
-			return "forward:/employee/list";
+			return "forward:/admin/employee/list";
 		}
 		model.addAttribute("mes", "Employee is Empty");
-		return "forward:/employee/list";
+		return "forward:/admin/employee/list";
 	}
 	@RequestMapping("list")
 	public String list(Model model) {
@@ -147,7 +180,7 @@ public class NhanVienController {
 			list=nhanVienService.findByNameContaining(name);
 		}
 		else list=nhanVienService.findAll();
-		model.addAttribute("products", list);
+		model.addAttribute("nhanViens", list);
 		return "htttql/NhanVienList";
 	}
 	

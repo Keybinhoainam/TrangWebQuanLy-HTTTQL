@@ -53,7 +53,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img id="image" th:src="${session.anhNhanVien!=null ? '/employee/images/'+session.anhNhanVien : 'images/noimage.jpg'}" class="img-circle profile_img"
+                <img id="image" th:src="${session.anhNhanVien!=null ? '/admin/employee/images/'+session.anhNhanVien : '/images/noimage.jpg'}" class="img-circle profile_img"
                           alt="Ảnh Nhân viên">
               </div>
               <div class="profile_info">
@@ -76,7 +76,7 @@
                       <li><a th:href="@{/report/employees}">Nhân Viên</a></li>
                     </ul>
                   </li>
-                  <li><a th:href="@{/employee/list}"><i class="fa fa-group"></i> Quản lý Nhân viên </a>
+                  <li><a th:href="@{/admin/employee/list}"><i class="fa fa-group"></i> Quản lý Nhân viên </a>
                     
                   </li>
                   <li><a th:href="@{/customer/list}"><i class="fa fa-group"></i> Quản lý Khách hàng </a>
@@ -117,7 +117,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" th:href="@{/logout}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -135,12 +135,12 @@
                 <ul class=" navbar-right">
                   <li class="nav-item dropdown open" style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" >
-                      <img id="image" th:src="${session.anhNhanVien!=null ? '/employee/images/'+session.anhNhanVien : 'images/noimage.jpg'}" 
-                          alt="Ảnh Nhân viên">[[${session.tenNhanVien}]]
+                      <img id="image" th:src="${session.anhNhanVien!=null ? '/admin/employee/images/'+session.anhNhanVien : '/images/noimage.jpg'}" 
+                          alt="Ảnh Nhân viên">[[${session.tenNhanVien}]] 
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                      <a class="dropdown-item"  th:href="@{/login}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                      <a class="dropdown-item"  th:href="@{/logout}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                     </div>
                   </li>
   
@@ -232,7 +232,7 @@
                   </div>
                   <div class="row mt-2 mb-2">
                     <div class="col pb-3">
-                      <form th:action="@{/product/search}">
+                      <form th:action="@{/admin/employee/search}">
                         <div class=" form-inline float-left">
                           <label for="name" class="mr-2">Name</label>
                           <input type="text" class="form-control mr-2" name="name" id="name"  placeholder="Name">
@@ -240,7 +240,7 @@
                         </div>
                       </form>
                       <div class=" float-right mr-4">
-                        <a th:href="@{/product/add}" type="button" class="btn btn-primary">Add New Product</a>
+                        <a th:href="@{/admin/employee/add}" type="button" class="btn btn-primary">Add New Employee</a>
                       </div>
                     </div>
                     
@@ -273,14 +273,14 @@
                           <!-- <td th:text="*{id}"></td> -->
                           <td ></td>
                           <td th:text="*{ten}"></td>
-                          <td th:text="*{gioiTinh}"></td>
+                          <td th:text="*{gioiTinh==true? 'Male':'Female'} "></td>
                           <td th:text="*{ngaySinh}"></td>
                           <td th:text="*{sdt}"></td>
                           <td  th:text="*{diaChi}"></td>
                           <td>
                             
-                            <a th:href="@{'/employee/edit/'+ *{id} }" class="btn btn-outline-warning"><i class="fa fa-edit"></i></a>
-                            <a th:href="@{'/employee/delete/'+ *{id} }" class="btn btn-outline-danger"><i class="fa fa-recycle"></i></a>
+                            <a th:href="@{'/admin/employee/edit/'+ *{id} }" class="btn btn-outline-warning"><i class="fa fa-edit"></i></a>
+                            <a th:href="@{'/admin/employee/delete/'+ *{id} }" class="btn btn-outline-danger"><i class="fa fa-recycle"></i></a>
 
                           </td>
                         </tr>

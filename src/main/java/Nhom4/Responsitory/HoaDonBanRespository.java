@@ -15,4 +15,6 @@ public interface HoaDonBanRespository extends JpaRepository<HoaDonBan, Long> {
     List<HoaDonBan> findByDate(Date ngayBan);
 	@Query("Select a from HoaDonBan a where a.ngayBan >= ?1 and a.ngayBan < ?2")
 	List<HoaDonBan> findByMonth(Date start,Date end);
+	@Query("Select a from HoaDonBan a where a.nhanVien.id = ?1")
+	List<HoaDonBan> findByNhanVien(Long id);
 }
