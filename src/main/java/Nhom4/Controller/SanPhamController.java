@@ -101,7 +101,14 @@ public class SanPhamController {
 			storageService.store(dto.getImageFile(), p.getHinhAnh());
 		}
 		else {
-			p.setHinhAnh(dto.getHinhAnh());
+			if(dto.getHinhAnh().isEmpty()||dto.getHinhAnh().isBlank()) {
+				p.setHinhAnh(null);
+			}
+			else {
+				p.setHinhAnh(dto.getHinhAnh());
+			}
+			
+			
 		}
 		
 		productservice.save(p);

@@ -46,7 +46,6 @@ public class ReportController {
 		model.addAttribute("values3", dataMonth1.values());
 		model.addAttribute("keySet4", dataMonth2.keySet());
 		model.addAttribute("values4", dataMonth2.values());
-		
 		Map<String, Integer> dataSalesQuantity = reportService.reportSalesQuantity();
 		model.addAttribute("salesQuantityKey", dataSalesQuantity.keySet());
 		model.addAttribute("salesQuantityValue", dataSalesQuantity.values());
@@ -56,18 +55,32 @@ public class ReportController {
 		return "htttql/index3";
 		
 	}
-    @RequestMapping("/2")
+    @RequestMapping("/employees")
 	public String barChart2(Model model)
 	{
-		Map<String, Integer> data2 = reportService.reportTotalSalesAmountByDate(new Date(), 7);
-		Map<String, Integer> data1 = reportService.reportRecentDailySalesQuantity(new Date(), 7);
-		model.addAttribute("keySet1", data1.keySet());
-		model.addAttribute("values1", data1.values());
-		model.addAttribute("keySet2", data2.keySet());
-		model.addAttribute("values2", data2.values());
-		return "htttql/test";
+    	
+		
+		Map<String, Integer> dataSalesQuantity = reportService.reportNhanVien1();
+		model.addAttribute("salesQuantityKey", dataSalesQuantity.keySet());
+		model.addAttribute("salesQuantityValue", dataSalesQuantity.values());
+		
+		String timeReport="";
+		model.addAttribute("timeReport", timeReport);
+		return "htttql/report2";
 		
 	}
+
+	/*
+	 * @RequestMapping("/2") public String barChart2(Model model) { Map<String,
+	 * Integer> data2 = reportService.reportTotalSalesAmountByDate(new Date(), 7);
+	 * Map<String, Integer> data1 = reportService.reportRecentDailySalesQuantity(new
+	 * Date(), 7); model.addAttribute("keySet1", data1.keySet());
+	 * model.addAttribute("values1", data1.values()); model.addAttribute("keySet2",
+	 * data2.keySet()); model.addAttribute("values2", data2.values()); return
+	 * "htttql/test";
+	 * 
+	 * }
+	 */
     @RequestMapping("/3")
 	public String barChart3(Model model)
 	{

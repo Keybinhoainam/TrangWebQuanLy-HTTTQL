@@ -22,6 +22,8 @@ public interface ReportService {
 
 	Map<String, Integer> reportSalesQuantity();
 
+	Map<String, Integer> reportNhanVien1();
+
 	
 
 	

@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -46,7 +47,7 @@ import Nhom4.Service.TaiKhoanService;
 
 
 @Controller
-@RequestMapping("/admin/employee/")
+@RequestMapping("/")
 public class NhanVienController {
 	@Autowired
 	NhanVienService nhanVienService;
@@ -54,6 +55,8 @@ public class NhanVienController {
 	TaiKhoanRespository taiKhoanService;
 	@Autowired
 	StorageService storageService;
+	@Autowired
+	HttpSession ss;
 	
 //	@ModelAttribute("categories")
 //	public List<DanhMucSanPhamDTO> getCategories(){
@@ -65,13 +68,13 @@ public class NhanVienController {
 //	}
 
 	
-	@GetMapping("add")
+	@GetMapping("/admin/employee/add")
 	public String add(Model model) {
 		model.addAttribute("nhanVien", new NhanVienDTO());
 		model.addAttribute("taiKhoan", new TaiKhoan());
 		return "htttql/NhanVienAddorEdit";
 	}
-	@GetMapping("edit/{employeeId}")
+	@GetMapping("/admin/employee/edit/{employeeId}")
 	public String edit(Model model, @PathVariable("employeeId") Long employeeId) {
 		Optional<NhanVien> opt=nhanVienService.findById(employeeId);
 		NhanVienDTO dtop=new NhanVienDTO();
@@ -95,7 +98,7 @@ public class NhanVienController {
 		model.addAttribute("mes", "Product is Empty");
 		return "forward: /admin/employee/list";
 	}
-	@PostMapping("saveOrUpdate")
+	@PostMapping("/admin/employee/saveOrUpdate")
 	public ModelAndView saveorupdate(ModelMap model,
 			@Valid @ModelAttribute("nhanVien") NhanVienDTO dto,@ModelAttribute("taiKhoan") TaiKhoan tk,BindingResult result) throws StorageException, ParseException {
 		
@@ -137,6 +140,9 @@ public class NhanVienController {
 			p.setHinhAnh(dto.getHinhAnh());
 		}
 		
+		if(p.getId()==ss.getAttribute("nhanVienId")) {
+			ss.setAttribute("anhNhanVien", p.getHinhAnh());
+		}
 		nhanVienService.save(p);
 		System.out.println(p.getId());
 		tk.setNhanVien(p);
@@ -146,7 +152,7 @@ public class NhanVienController {
 	}
 
 	
-	 @GetMapping("/images/{filename:.+}")
+	 @GetMapping("/employee/images/{filename:.+}")
 	 
 	 @ResponseBody public ResponseEntity<Resource> serveFile(@PathVariable String
 		 filename) throws StoreFileNotFoundException{ 
@@ -155,7 +161,7 @@ public class NhanVienController {
 		 "attachment; filename=\"" +file.getFilename()+"\"").body(file); 
 		 }
 	
-	@GetMapping("delete/{nhanVienId}")
+	@GetMapping("/admin/employee/delete/{nhanVienId}")
 	public String delete(Model model, @PathVariable("nhanVienId") Long nhanVienId) {
 		Optional<NhanVien> opt=nhanVienService.findById(nhanVienId);
 		
@@ -167,13 +173,13 @@ public class NhanVienController {
 		model.addAttribute("mes", "Employee is Empty");
 		return "forward:/admin/employee/list";
 	}
-	@RequestMapping("list")
+	@RequestMapping("/admin/employee/list")
 	public String list(Model model) {
 		List<NhanVien> list=nhanVienService.findAll();
 		model.addAttribute("nhanViens", list);
 		return "htttql/NhanVienList";
 	}
-	@RequestMapping("search")
+	@RequestMapping("/admin/employee/search")
 	public String search(Model model, @RequestParam(name="name") String name){
 		List<NhanVien> list=null;
 		if(!name.isEmpty()) {

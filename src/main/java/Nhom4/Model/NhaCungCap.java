@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class NhaCungCap {
 	@Id
@@ -17,6 +19,7 @@ public class NhaCungCap {
 	String ten;
 	String sdt;
 	String diaChi;
+	@JsonIgnore
 	@OneToMany(mappedBy = "nhaCungCap",cascade = CascadeType.ALL)
 	private Set<HoaDonNhap> listHoaDonNhap;
 	public NhaCungCap() {

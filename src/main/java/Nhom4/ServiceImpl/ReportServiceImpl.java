@@ -20,11 +20,13 @@ import Nhom4.Model.ChiTietHDNhap;
 import Nhom4.Model.ChiTietHoaDonBan;
 import Nhom4.Model.HoaDonBan;
 import Nhom4.Model.HoaDonNhap;
+import Nhom4.Model.NhanVien;
 import Nhom4.Model.SanPham;
 import Nhom4.Responsitory.ChiTietHoaDonBanRespository;
 import Nhom4.Responsitory.ChiTietHoaDonNhapRespository;
 import Nhom4.Responsitory.HoaDonBanRespository;
 import Nhom4.Responsitory.HoaDonNhapRespository;
+import Nhom4.Responsitory.NhanVienResponsitory;
 import Nhom4.Responsitory.SanPhamResponsitory;
 import Nhom4.Service.ReportService;
 @Service
@@ -39,6 +41,8 @@ public class ReportServiceImpl implements ReportService{
 	ChiTietHoaDonNhapRespository chiTietHoaDonNhapRespository;
 	@Autowired
 	SanPhamResponsitory sanPhamResponsitory;
+	@Autowired
+	NhanVienResponsitory nhanVienResponsitory;
 //	@Autowired
 //	HoaDonNhapR
 	public ReportServiceImpl() {
@@ -46,6 +50,35 @@ public class ReportServiceImpl implements ReportService{
 	}
 	
 	
+	// lấy số lượng sp của từng nhanvien bán
+	
+			
+			@Override
+			public Map<String, Integer> reportNhanVien1() {
+				List<NhanVien> listnv=nhanVienResponsitory.findAll();
+				Map<String, Integer> data= new LinkedHashMap<String, Integer>();
+				for(NhanVien nv: listnv) {
+					List<HoaDonBan>hoaDonBans= hoaDonBanRespository.findByNhanVien(nv.getId());
+					for(HoaDonBan hoaDonBan: hoaDonBans) {
+						List<ChiTietHoaDonBan> chiTietHoaDonBans=chiTietHoaDonBanRespository.findByHoadonban(hoaDonBan.getId());
+						for(ChiTietHoaDonBan chiTietHoaDonBan: chiTietHoaDonBans) {
+							SanPham sp= sanPhamResponsitory.findById(chiTietHoaDonBan.getSanPham().getId()).get();
+							if(data.containsKey(sp.getTen())) {
+								data.put(nv.getTen(), data.get(nv.getTen())+chiTietHoaDonBan.getSoLuong());
+							}
+							else {
+								data.put(nv.getTen(), chiTietHoaDonBan.getSoLuong());
+							}
+						}
+						
+						
+					}
+				}
+				
+				
+				return data;
+				
+			}
 	
 	// lấy số lượng của từng item bán
 		
@@ -95,6 +128,7 @@ public class ReportServiceImpl implements ReportService{
 		}
 		return count;
 	}
+	
 	//thống kê tổng tiền bán theo ngày
 	@Override
 	public Map<String, Integer> reportRecentDailySalesQuantity(Date d, int limit) {
@@ -262,10 +296,13 @@ public class ReportServiceImpl implements ReportService{
     
    
     public static List<Date> subMonths(Date date, int months) {
-    	LocalDate localstart = LocalDate.now().minusMonths(months).withDayOfMonth(1);
-    	LocalDate localend = LocalDate.now().minusMonths(months-1).withDayOfMonth(1);
-    	Date start = Date.from(localstart.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    	Date end = Date.from(localend.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    	Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MONTH, -months);
+        c.set(Calendar.DAY_OF_MONTH,c.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date start=c.getTime();
+        c.set(Calendar.DAY_OF_MONTH,c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date end=c.getTime();
         List<Date> list=new ArrayList<Date>();
         list.add(start);
         list.add(end);

@@ -19,4 +19,5 @@ public interface SanPhamResponsitory extends JpaRepository<SanPham, Long>{
 	List<SanPham> findProductInStock();
 	@Query("select p from SanPham p where p.soLuong <= 0")
 	List<SanPham> findProductOutStock();
+	
 }

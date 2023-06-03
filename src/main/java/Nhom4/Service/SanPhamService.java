@@ -1,5 +1,6 @@
 package Nhom4.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -84,6 +85,10 @@ public interface SanPhamService {
 	List<SanPham> findProductOutStock();
 
 	List<SanPham> findProductInStock();
+
+	int getQuantityBySales(SanPham sp);
+
+	int getQuantityBySalesDay(SanPham sp, Date from, Date to);
 
 	
 

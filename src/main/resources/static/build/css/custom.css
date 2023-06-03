@@ -4,7 +4,6 @@
   src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot");
   src: url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.woff") format("woff"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format("svg"); }
 .message {
-  background-color: #4CAF50;
   color: white;
   padding: 10px;
   position: fixed;
@@ -810,7 +809,8 @@
   content: "\e260"; }
 
 .left_col {
-  background: #2A3F54; }
+  background: #2A3F54;
+}
 
 .container {
   width: 100%;
@@ -1019,7 +1019,7 @@
   min-height: 100%;
   width: 230px;
   padding: 0;
-  position: absolute;
+  position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1489,8 +1489,7 @@ a:hover, a:focus {
   padding: 9px; }
 
 .panel_toolbox {
-  float: right;
-  min-width: 70px; }
+  float: right; }
 
 .panel_toolbox > li {
   float: left;
@@ -2281,7 +2280,9 @@ span.right {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  position: relative; }
+  position: relative; 
+  text-align: center;
+}
 
 @media (min-width: 992px) {
   footer {

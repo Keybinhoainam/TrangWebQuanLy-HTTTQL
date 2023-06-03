@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class NhanVien {
@@ -78,29 +80,35 @@ public class NhanVien {
 	public void setDiaChi(String diaChi) {
 		this.diaChi = diaChi;
 	}
-	
+	@JsonIgnore
 	public Set<TaiKhoan> getTaiKhoan() {
 		return taiKhoan;
 	}
+	@JsonIgnore
 	public void setTaiKhoan(Set<TaiKhoan> taiKhoan) {
 		this.taiKhoan = taiKhoan;
 	}
+	@JsonIgnore
 	public Set<LuongThang> getListLuongThang() {
 		return listLuongThang;
 	}
+	@JsonIgnore
 	public void setListLuongThang(Set<LuongThang> listLuongThang) {
 		this.listLuongThang = listLuongThang;
 	}
-	
+	@JsonIgnore
 	public Set<HoaDonNhap> getListHoaDonNhap() {
 		return listHoaDonNhap;
 	}
+	@JsonIgnore
 	public void setListHoaDonNhap(Set<HoaDonNhap> listHoaDonNhap) {
 		this.listHoaDonNhap = listHoaDonNhap;
 	}
+	@JsonIgnore
 	public Set<HoaDonBan> getListHoaDonBan() {
 		return listHoaDonBan;
 	}
+	@JsonIgnore
 	public void setListHoaDonBan(Set<HoaDonBan> listHoaDonBan) {
 		this.listHoaDonBan = listHoaDonBan;
 	}

@@ -9,10 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,16 +27,19 @@ import Nhom4.Model.ChiTietHDNhap;
 import Nhom4.Model.ChiTietHoaDonBan;
 import Nhom4.Model.HoaDonBan;
 import Nhom4.Model.HoaDonNhap;
+import Nhom4.Model.NhaCungCap;
 import Nhom4.Model.NhanVien;
 import Nhom4.Model.SanPham;
 import Nhom4.Responsitory.ChiTietHoaDonNhapRespository;
 import Nhom4.Responsitory.HoaDonBanRespository;
 import Nhom4.Responsitory.HoaDonNhapRespository;
 import Nhom4.Responsitory.NhaCungCapRespository;
+import Nhom4.Responsitory.NhanVienResponsitory;
 import Nhom4.Responsitory.SanPhamResponsitory;
 import Nhom4.Service.ChiTietHoaDonBanService;
 import Nhom4.Service.HoaDonBanService;
 import Nhom4.Service.KhachHangService;
+import Nhom4.Service.NhanVienService;
 
 @RestController
 @RequestMapping("/data")
@@ -54,6 +60,9 @@ public class Controller {
 	ChiTietHoaDonNhapRespository chiTietHoaDonNhapRespository;
 	@Autowired
 	HttpSession session ;
+	@Autowired
+	NhanVienService nhanVienService;
+	
 	@PostMapping(value = "/add")
     public Long addInvoice(ModelMap model, @RequestBody HoaDonBanDTO hdb)
     {
@@ -126,4 +135,20 @@ public class Controller {
 		
 		return x.getId();
     }
+	@RequestMapping(value = "/getNV", method = RequestMethod.GET)
+	public ResponseEntity<List<NhanVien>> listAllNhanVien(){
+		List<NhanVien> listNv= nhanVienService.findAll();
+		if(listNv.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<NhanVien>>(listNv, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/getNCC", method = RequestMethod.GET)
+	public ResponseEntity<List<NhaCungCap>> listAllNCC(){
+		List<NhaCungCap> listNv= nhaCungCapRespository.findAll();
+		if(listNv.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<NhaCungCap>>(listNv, HttpStatus.OK);
+	}
 }

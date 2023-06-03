@@ -40,10 +40,30 @@ public class SanPhamServiceImpl implements SanPhamService{
 	
 	@Autowired
 	SanPhamResponsitory sanPhamResponsitory;
+	@Autowired
+	ChiTietHoaDonBanRespository chiTietHoaDonBanRespository;
 //	@Autowired
 //	HoaDonNhapR
 	public SanPhamServiceImpl() {
 		super();
+	}
+	@Override
+	public int getQuantityBySales(SanPham sp) {
+		List<ChiTietHoaDonBan> list=chiTietHoaDonBanRespository.findBySanPham(sp.getId());
+		int count=0;
+		for(ChiTietHoaDonBan t: list) {
+			count+=t.getSoLuong();
+		}
+		return count;
+	}
+	@Override
+	public int getQuantityBySalesDay(SanPham sp,Date from,Date to) {
+		List<ChiTietHoaDonBan> list=chiTietHoaDonBanRespository.findBySanPhamDay(sp.getId(),from,to);
+		int count=0;
+		for(ChiTietHoaDonBan t: list) {
+			count+=t.getSoLuong();
+		}
+		return count;
 	}
 @Override
 public <S extends SanPham> S save(S entity) {

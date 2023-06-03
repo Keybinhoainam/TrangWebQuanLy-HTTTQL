@@ -1,292 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Nhóm 4 </title>
+  <title>Nhóm 4 </title>
 
-    <!-- Bootstrap -->
-    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- bootstrap-progressbar -->
-    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    
-    
-    <!-- Custom Theme Style -->
-    <link href="/build/css/custom.min.css" rel="stylesheet">
-   
-   
-   <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" type="text/css" media="all" href="/build/css/bhn.css" />
-	
+  <!-- Bootstrap -->
+  <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- bootstrap-progressbar -->
+  <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
 
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+  <!-- Custom Theme Style -->
+  <link href="/build/css/custom.min.css" rel="stylesheet">
 
-      
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
-   
-  </head>
 
-  <body class="nav-md">
-  	
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Nhóm 4 !</span></a>
-            </div>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="/build/css/bhn.css" />
 
-            <div class="clearfix"></div>
 
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img id="image" th:src="${session.anhNhanVien!=null ? '/admin/employee/images/'+session.anhNhanVien : '/images/noimage.jpg'}" class="img-circle profile_img"
-                          alt="Ảnh Nhân viên">
-              </div>
-              <div class="profile_info">
-                <span>Xin chào,</span>
-                <h2 th:text="${session.tenNhanVien}"></h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
-            <br />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu">
-                 <li ><a><i class="fa fa-bar-chart "></i> Báo cáo <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li ><a th:href="@{/report/sales}">Bán hàng</a></li>
-                      <li><a th:href="@{/report/employees}">Nhân Viên</a></li>
-                    </ul>
-                  </li>
-                  <li><a th:href="@{/admin/employee/list}"><i class="fa fa-group"></i> Quản lý Nhân viên </a>
-                    
-                  </li>
-                  <li><a th:href="@{/customer/list}"><i class="fa fa-group"></i> Quản lý Khách hàng </a>
-                    
-                  </li>
-                  
-                  <li><a><i class="fa fa-archive"></i> Quản lý Sản phẩm <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a th:href="@{/product/list}">Sản phẩm </a></li>
-                      <li><a th:href="@{/categories/list}">Danh mục Sản Phẩm</a></li>
-                    </ul>
-                  </li>
-                  <li><a th:href="@{/supplier/list}"><i class="fa fa-group"></i> Quản lý Nhà cung cấp </a>
-                    
-                  </li>
-                  <li><a th:href="@{/sell/list}"><i class="fa fa-money"></i> Quản lý Bán hàng </a>
-                    
-                  </li>
-                  <li><a th:href="@{/purchase/list}"><i class="fa fa-shopping-cart"></i> Quản lý Nhập hàng </a>
-                    
-                  </li>
-                  
-                </ul>
-              </div>
-              
 
-            </div>
-            <!-- /sidebar menu -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    defer></script>
 
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" th:href="@{/logout}">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
+</head>
 
-        <!-- top navigation -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <div class="nav toggle">
-                  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                </div>
-                <nav class="nav navbar-nav">
-                <ul class=" navbar-right">
-                  <li class="nav-item dropdown open" style="padding-left: 15px;">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false" >
-                      <img id="image" th:src="${session.anhNhanVien!=null ? '/admin/employee/images/'+session.anhNhanVien : '/images/noimage.jpg'}" 
-                          alt="Ảnh Nhân viên">[[${session.tenNhanVien}]]
-                    </a>
-                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                      <a class="dropdown-item"  th:href="@{/logout}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                    </div>
-                  </li>
-  
-                  <!-- <li role="presentation" class="nav-item dropdown open" >
-                    <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-envelope-o"></i>
-                      <span class="badge bg-green">6</span>
-                    </a>
-                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1" >
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="dropdown-item">
-                          <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                          <span>
-                            <span>John Smith</span>
-                            <span class="time">3 mins ago</span>
-                          </span>
-                          <span class="message">
-                            Film festivals used to be do-or-die moments for movie makers. They were where...
-                          </span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <div class="text-center">
-                          <a class="dropdown-item">
-                            <strong>See All Alerts</strong>
-                            <i class="fa fa-angle-right"></i>
-                          </a>
-                        </div>
-                      </li>
-                    </ul>
-                  </li> -->
-                </ul>
-              </nav>
-            </div>
-          </div>
-        <!-- /top navigation -->
+<body class="nav-md">
 
-        <!-- page content -->
-       		<div class="right_col" role="main">
-       			<header class="row text-center ">
-            
+  <div class="container body">
+    <div class="main_container">
+
+
+      <!-- navigation -->
+      <div th:replace="~{fragments/navigation :: navigation}"></div>
+      <!-- navigation -->
+
+
+      <!-- page content -->
+      <div class="right_col" role="main">
+        <header class="row text-center ">
+
         </header>
         <section class="row ">
-            <div class="col-6 offset-3">
-                
-                <form th:action="@{/admin/categories/saveOrUpdate}" method="post"  th:object="${category}">
-                    <div class="card">
-                        <div class="card-header font-weight-bolder pb-0">
-                        	<span th:if="${category.isEdit}"><h1>Edit Category</h1></span>
-                            <span th:unless="${category.isEdit}"><h1>Add New Category</h1></span>
-                            
-                        </div>
-                        <div class="card-body">
-                            
-                            <div class="form-group">
-                               
-                              <label for="categoryid">Category Id:</label>
-                              <input type="text" class="form-control"  id="categoryid" th:field="*{id}" placeholder="Category ID" readonly>
-                              <small th:if="${#fields.hasErrors('id')}" class="invalid-feedback">Category Id is required</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" class="form-control" th:field="*{ten}" id="name" placeholder="name" >
-                                <small th:if="${#fields.hasErrors('ten')}" >Name is required or invalid</small>
-                              </div>
-                            
-                        </div>
-                        <div class="card-footer text-muted">
-                            <button th:href="@{/admin/categories}" class="btn btn-success">List Categories</button>
-                            <button class="btn btn-primary"><i class="fa fa-save  "></i>
-                                <span th:if="*{isEdit}">Update</span>
-                                <span th:unless="*{isEdit}">Save</span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
-        
-    </main>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-       			
-       </div>	         
-       	<!-- /page content -->
+          <div class="col-6 offset-3">
 
-        <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            <form th:action="@{/categories/saveOrUpdate}" method="post" th:object="${category}">
+              <div class="card">
+                <div class="card-header font-weight-bolder pb-0">
+                  <span th:if="${category.isEdit}">
+                    <h1>Edit Category</h1>
+                  </span>
+                  <span th:unless="${category.isEdit}">
+                    <h1>Add New Category</h1>
+                  </span>
+
+                </div>
+                <div class="card-body">
+
+                  <div class="form-group">
+
+                    <label for="categoryid">Category Id:</label>
+                    <input type="text" class="form-control" id="categoryid" th:field="*{id}" placeholder="Category ID"
+                      readonly>
+                    <small th:if="${#fields.hasErrors('id')}" class="invalid-feedback">Category Id is required</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" th:field="*{ten}" id="name" placeholder="name">
+                    <small th:if="${#fields.hasErrors('ten')}">Name is required or invalid</small>
+                  </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                  <button th:href="@{/admin/categories}" class="btn btn-success">List Categories</button>
+                  <button class="btn btn-primary"><i class="fa fa-save  "></i>
+                    <span th:if="*{isEdit}">Update</span>
+                    <span th:unless="*{isEdit}">Save</span>
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-          <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
+        </section>
+
+        </main>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+
       </div>
+      <!-- /page content -->
+
+      <!-- footer content -->
+      <footer>
+        
+      </footer>
+      <!-- /footer content -->
     </div>
+  </div>
 
-    <!-- jQuery -->
-    <script src="/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-   <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- FastClick -->
-    <script src="/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="/vendors/nprogress/nprogress.js"></script>
+  <!-- jQuery -->
+  <script src="/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- jQuery -->
+  <script src="/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
 
-    <!-- Custom Theme Scripts -->
-    <script src="/build/js/custom.min.js"></script>
-  </body>
+  <!-- FastClick -->
+  <script src="/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="/vendors/nprogress/nprogress.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="/build/js/custom.min.js"></script>
+  <script src="/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

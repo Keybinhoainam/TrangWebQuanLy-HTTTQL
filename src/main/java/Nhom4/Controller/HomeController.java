@@ -34,7 +34,13 @@ public class HomeController {
     public String home(ModelMap model)
     {
         
-        return "redirect:/report/sales";
+        return "redirect:/dashboard";
+    }
+	@RequestMapping("/dashboard")
+    public String dashboard(ModelMap model)
+    {
+        
+        return "htttql/dashboard";
     }
 	@GetMapping("/login")
     public String login(ModelMap model)
@@ -50,7 +56,7 @@ public class HomeController {
 		System.out.println(tk.getUserName()+"  "+tk.getPassword());
 		Optional<TaiKhoan> tk2opt = taiKhoanService.findById(tk.getUserName());
 		
-		if(tk2opt.isEmpty() || !tk2opt.get().getPassword().equals(tk2opt.get().getPassword())) {
+		if(tk2opt.isEmpty() || !tk2opt.get().getPassword().equals(tk.getPassword())) {
 			model.addAttribute("message","Invalid username or password.");
 			return "login";
 		}

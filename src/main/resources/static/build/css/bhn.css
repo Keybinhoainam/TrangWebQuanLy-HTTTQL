@@ -444,3 +444,11 @@
     clear: none !important;
   }
 }
+.text-success {
+	--bs-success-rgb: 113, 221, 55;
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
+}
+.fw-semibold {
+    font-weight: 600 !important;
+}
