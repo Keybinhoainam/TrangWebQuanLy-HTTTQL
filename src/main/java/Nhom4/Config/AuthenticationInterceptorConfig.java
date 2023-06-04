@@ -20,7 +20,7 @@ public class AuthenticationInterceptorConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(quanLyAuthenticationInterceptor)
 			.addPathPatterns("/admin/**");
-		registry.addInterceptor(nhanVienAuthenticationInterceptor).addPathPatterns("/report/**");
+		registry.addInterceptor(nhanVienAuthenticationInterceptor).addPathPatterns("/dashboard/**");
 	}
 
 }

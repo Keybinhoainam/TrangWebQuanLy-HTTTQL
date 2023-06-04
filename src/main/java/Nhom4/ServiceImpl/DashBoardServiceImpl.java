@@ -95,7 +95,7 @@ public class DashBoardServiceImpl implements DashBoardService{
 		if(tong1==0) {
 			return 100;
 		}
-		return Math.round((tong2-tong1)/tong1 *100);
+		return Math.round((tong2-tong1)*100/tong1);
 	}
 	@Override
 	public int comparedOrder(Date from1, Date to1,Date from2, Date to2) {
@@ -103,10 +103,11 @@ public class DashBoardServiceImpl implements DashBoardService{
 		int tong1=lhdb1.size();
 		List<HoaDonBan> lhdb2= hoaDonBanRespository.findByNgayBan(from2, to2);
 		int tong2=lhdb2.size();
+		
 		if(tong1==0) {
 			return 100;
 		}
-		else return Math.round((tong2-tong1)/tong1 *100);
+		else return Math.round((tong2-tong1) *100/tong1 );
 	}
 	@Override
 	public int comparedCustomer(Date from1, Date to1,Date from2, Date to2) {
@@ -131,7 +132,7 @@ public class DashBoardServiceImpl implements DashBoardService{
 		if(tong1==0) {
 			return 100;
 		}
-		return Math.round((tong2-tong1)/tong1 *100);
+		return Math.round((tong2-tong1)*100/tong1);
 	}
 	
 }
