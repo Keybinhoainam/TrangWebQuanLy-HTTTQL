@@ -90,6 +90,8 @@ public interface SanPhamService {
 
 	int getQuantityBySalesDay(SanPham sp, Date from, Date to);
 
+	int getQuantityTonKhoByDay(SanPham sp);
+
 	
 
 

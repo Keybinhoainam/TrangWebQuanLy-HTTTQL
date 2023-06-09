@@ -420,6 +420,7 @@ var chart1 = Highcharts.chart("container1", {
 //   },
 // });
 var timeout;
+// var data;
 async function changeDay(from2, to2, option) {
   var from = document.getElementById("fromDate").value;
   var to = document.getElementById("toDate").value;
@@ -450,6 +451,7 @@ async function changeDay(from2, to2, option) {
   });
   if (result.ok) {
     var data = await result.json();
+    console.log(data);
     var revenue = data.revenue;
     var reHtml = document.getElementById("norevenue");
     reHtml.textContent = "$" + revenue;
@@ -510,17 +512,143 @@ async function changeDay(from2, to2, option) {
       },
       true
     );
+
     // updateChart(chartNv, data.dataNvKey, data.datanNvValue);
     // updateChart(chartProduct,data.dataProductKey,data.datanProductValue);
   }
-
-  
 }
+async function changeDay2(from2, to2, option) {
+  var from = document.getElementById("fromDate").value;
+  var to = document.getElementById("toDate").value;
+
+  if (from && to) {
+    var body = {
+      from: from,
+      to: to,
+      from2: from2,
+      to2: to2,
+      option: option,
+    };
+  } else {
+    var body = {
+      from: null,
+      to: null,
+      from2: from2,
+      to2: to2,
+      option: option,
+    };
+  }
+  var result = await fetch("http://localhost:8080/api/requestdata", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (result.ok) {
+    var data = await result.json();
+    var sizeTb = document.getElementById("sizeTb");
+    sizeTb.innerHTML = data.sizeTb;
+    var html = ``;
+    if (data.data0revenue.length > 0) {
+      html += `<div class="panel panel-default npanel">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#collapse${data.data0revenue[0].length}">
+              <i class="fa fa-exclamation-triangle nrow-modal-body-icon"
+                aria-hidden="true"></i>
+              <span class="nrow-modal-body-content">Những ngày liên tục có doanh thu bằng 0</span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse${data.data0revenue[0].length}" class="panel-collapse collapse">`;
+
+      for (var i = 0; i < data.data0revenue.length; i++) {
+        html += `<div class="panel-body npanel-body">${data.data0revenue[i]}</div>`;
+      }
+      html += `</div>
+      </div>`;
+    }
+    if (data.data0nv.length > 0) {
+      html += `<div class="panel panel-default npanel">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#collapse${data.data0nv[0].length}">
+              <i class="fa fa-exclamation-triangle nrow-modal-body-icon"
+                aria-hidden="true"></i>
+              <span class="nrow-modal-body-content">Nhân viên có doanh thu không đủ yêu cầu</span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse${data.data0nv[0].length}" class="panel-collapse collapse">`;
+
+      for (var i = 0; i < data.data0nv.length; i++) {
+        html += `<div class="panel-body npanel-body">${data.data0nv[i]}</div>`;
+      }
+      html += `</div>
+      </div>`;
+    }
+    if (data.data0sales.length > 0) {
+      html += `<div class="panel panel-default npanel">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#collapse${data.data0sales[0].length}">
+              <i class="fa fa-exclamation-triangle nrow-modal-body-icon"
+                aria-hidden="true"></i>
+              <span class="nrow-modal-body-content">Những sản phẩm không bán được</span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse${data.data0sales[0].length}" class="panel-collapse collapse">`;
+
+      for (var i = 0; i < data.data0sales.length; i++) {
+        html += `<div class="panel-body npanel-body">${data.data0sales[i]}</div>`;
+      }
+      html += `</div>
+      </div>`;
+    }
+    html += `</div>`;
+    var dataTb = document.getElementById("panel-group");
+    dataTb.innerHTML= html;
+
+
+    var html2 = `<table class="table table-striped table-inverse " id="tableDM">
+    <thead class="thead-inverse">
+      <tr>
+      <th></th>
+      <th>Tên Sản phẩm</th>
+      <th>Loại sản phẩm</th>
+      <th>Thời gian ra mắt</th>
+      <th>Số lượng bán được trong thời gian này</th>
+      <th>Số lượng tồn kho</th>
+      <th onclick="sortTable(5)">Hàm U</th>
+      </tr>
+    </thead>
+    <tbody>`;
+    for(var i=0;i<data.desionMatrixs.length;i++){
+      html2+=`<tr>
+      <td></td>
+      <td>${data.desionMatrixs[i].ten}</td>
+      <td >${data.desionMatrixs[i].loai}</td>
+      <td>${data.desionMatrixs[i].thoiGianRaMat}</td>
+      <td>${data.desionMatrixs[i].soLuongBan}</td>
+      <td >${data.desionMatrixs[i].soLuongTonKho}</td>
+      <td></td>
+      </tr>`
+    }
+    html2 += `</tbody>
+    </table>`;
+    var content = document.getElementById("panel-group2");
+    content.innerHTML= html2;
+  }
+}
+
 var intervalID;
-function requestData(from2, to2, option){
-  intervalID=setInterval(function(){
+function requestData(from2, to2, option) {
+  intervalID = setInterval(function () {
     changeDay(from2, to2, option);
-  },1000);
+  }, 1000);
+  changeDay2(from2, to2, option);
 }
 function updateChart(chartUp, dataKey, dataKey) {
   // chart1.xAxis.update({ categories: dataKey });
@@ -532,6 +660,7 @@ function updateChart(chartUp, dataKey, dataKey) {
     true
   );
 }
+
 function init() {
   const [date, time] = formatDate(new Date()).split(" ");
   document.getElementById("fromDate").value = date;
@@ -543,8 +672,6 @@ function init() {
   // overrideTimeOut();
   // console.log("window.activeTimers: "+window.activeTimers);
   requestData(date2, date2, "1");
-  var id = setTimeout(";");
-  console.log("id: " + id);
 }
 function padTo2Digits(num) {
   return num.toString().padStart(2, "0");
@@ -695,5 +822,41 @@ function selectCustomDate() {
       nform[i].hidden = true;
     }
     requestData(null, null, option);
+  }
+}
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("tableDM");
+  switching = true;
+  dir = "asc"; 
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;      
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
   }
 }

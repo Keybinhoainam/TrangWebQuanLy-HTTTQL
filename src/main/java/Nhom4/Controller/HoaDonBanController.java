@@ -1,8 +1,15 @@
 package Nhom4.Controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
@@ -28,6 +35,7 @@ import Nhom4.Model.SanPham;
 import Nhom4.Responsitory.SanPhamResponsitory;
 import Nhom4.Service.HoaDonBanService;
 import Nhom4.Service.KhachHangService;
+import Nhom4.Service.SanPhamService;
 
 @Controller
 @RequestMapping("/sell")
@@ -38,7 +46,8 @@ public class HoaDonBanController {
 	KhachHangService khachHangService;
 	@Autowired
 	SanPhamResponsitory sanPhamRepository;
-	
+	@Autowired
+	SanPhamService sanPhamService;
 	@GetMapping("/list")
 	public String showList(ModelMap model)
     {
@@ -73,7 +82,26 @@ public class HoaDonBanController {
 		model.addAttribute("hoaDonBan",h);
         return "invoice_detail";
     }
-	
+	public Map<String,Integer> getDataProduct() {
+		List<SanPham> list1=sanPhamService.findAll();
+		Collections.sort(list1, new Comparator<SanPham>() {
+			
+			
+			@Override
+			public int compare(SanPham sp1,SanPham sp2) {
+				return (int)(getQuantityBySales(sp2)-getQuantityBySales(sp1));
+			}
+		});
+		Map<String,Integer> data=new LinkedHashMap();
+		for(SanPham sp: list1) {
+			data.put(sp.getTen(), getQuantityBySales(sp));
+		}
+		
+		return data;
+	}
+	public int getQuantityBySales(SanPham sp) {
+		return sanPhamService.getQuantityBySales(sp);
+	}
 	@GetMapping("/add")
 	public String showAddForm(ModelMap model)
     {
@@ -88,12 +116,19 @@ public class HoaDonBanController {
 			listDTO.add(khachHangDTO);
 		}
 		model.addAttribute("listKH",listDTO);
+		Map<String,Integer> dataProduct= getDataProduct();
+		Iterator<Entry<String, Integer>> iterator=dataProduct.entrySet().iterator();
+		int maxQuantity=iterator.next().getValue();
+		int minQuantity=0;
+		while (iterator.hasNext()) { minQuantity = iterator.next().getValue(); }
 		
 		List<SanPham> sp = sanPhamRepository.findAll();
 		List<SanPhamDTO> listSP = new ArrayList<>();
 		for (SanPham sanPham : sp) {
 			SanPhamDTO sanPhamDTO = new SanPhamDTO();
 			BeanUtils.copyProperties(sanPham, sanPhamDTO);
+			sanPhamDTO.setLoai(sanPham.getDanhMucSanPham().getTen());
+			sanPhamDTO.setDoHot(getDoHot(minQuantity,maxQuantity,dataProduct.get(sanPham.getTen())));
 			listSP.add(sanPhamDTO);
 		}
 		model.addAttribute("listSP",listSP);
@@ -106,7 +141,18 @@ public class HoaDonBanController {
         return "create_invoice";
     }
 	
-	
+	public String getDoHot(int minQuantity,int maxQuantity,int soluong) {
+		int nguong=Math.round((maxQuantity-minQuantity) / 3) ;
+		if(soluong<minQuantity+nguong) {
+			return "Ít";
+		}
+		else if(soluong>=minQuantity+nguong&&soluong<minQuantity+2*nguong) {
+			return "Trung Bình";
+		}
+		else {
+			return "Nhiều";
+		}
+	}
 	@GetMapping("/delete")
 	public ModelAndView deleteInvoice(Model model, @RequestParam("id") Long id) {
 		hoaDonBanService.deleteById(id);

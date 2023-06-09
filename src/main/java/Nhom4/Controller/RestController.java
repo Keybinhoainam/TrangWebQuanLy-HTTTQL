@@ -23,6 +23,8 @@ import com.google.gson.Gson;
 
 import Nhom4.Dto.DashBoardOverview;
 import Nhom4.Dto.DashboardNV;
+import Nhom4.Dto.DesionMatrix;
+import Nhom4.Dto.SanPhamDTO;
 import Nhom4.Dto.Change;
 import Nhom4.Model.HoaDonBan;
 import Nhom4.Model.NhanVien;
@@ -128,9 +130,22 @@ public class RestController {
 		return data;
 		
 	}
+	public List<String> getdata0nv(Date from,Date to) {
+		List<NhanVien> list1=nhanVienService.findAll();
+		List<String> data=new ArrayList<String>();
+		for(NhanVien nv: list1) {
+			if(getDoanhThuByNhanVienDay(nv,from,to)==0) {
+				data.add(nv.getTen());
+			}
+			
+		}
+		return data;
+		
+	}
 	public Float getDoanhThuByNhanVienDay(NhanVien nv,Date from,Date to) {
 		return hoaDonBanService.getDoanhThuByNhanVienDay(nv,from,to);
 	}
+	
 	public Map<String,Integer> getDataProduct(Date from,Date to) {
 		List<SanPham> list1=sanPhamService.findAll();
 		Collections.sort(list1, new Comparator<SanPham>() {
@@ -145,6 +160,19 @@ public class RestController {
 		for(SanPham sp: list1) {
 			data.put(sp.getTen(), getQuantityBySalesDay(sp,from,to));
 		}
+		
+		return data;
+	}
+	public List<String> getData0Product(Date from,Date to) {
+		List<SanPham> list1=sanPhamService.findAll();
+		
+		List<String> data= new ArrayList<String>();
+		for(SanPham sp: list1) {
+			if(getQuantityBySalesDay(sp,from,to)==0) {
+				data.add(sp.getTen());
+			}
+		}
+		
 		return data;
 	}
 	public int getQuantityBySalesDay(SanPham sp,Date from,Date to) {
@@ -170,26 +198,38 @@ public class RestController {
 		int kcmonth= to.getMonth()+1;
 		Map<String, Integer>  data1=new HashMap<String, Integer>();
 		Map<String, Integer> data2 =new HashMap<String, Integer>();
+		List<String> data0revenue=new ArrayList<String>();
 		if(datechange.getOption().equals("3") || datechange.getOption().equals("6")) {
 			data1 = reportService.reportRecentMonthlySalesQuantity(to, kcmonth);
 			data2 = reportService.reportTotalSalesAmountByMonth(to, kcmonth);
+//			System.out.println(to+" //// "+kcmonth);
+			data0revenue=reportService.getData0SalesByMonth(to, kcmonth);
 		}
 		else {
-			data1 = reportService.reportTotalSalesAmountByDate(to, kcdate);
-			data2 = reportService.reportRecentDailySalesQuantity(to, kcdate);
+			data2 = reportService.reportTotalSalesAmountByDate(to, kcdate);
+			data1 = reportService.reportRecentDailySalesQuantity(to, kcdate);
+			data0revenue=reportService.getData0SalesByDate(to, kcdate);
 		}
 		Map<String,Float> datanv=getdatanv(from,to);
 		Map<String,Integer> dataproduct= getDataProduct(from,to);
+		List<String> data0nv=getdata0nv(from,to);
+		List<String> data0product=getData0Product(from,to);
+		
+		int sizeTb=0;
+		if(!data0revenue.isEmpty())sizeTb+=1;
+		if(!data0nv.isEmpty())sizeTb+=1;
+		if(!data0product.isEmpty())sizeTb+=1;
+		List<DesionMatrix> desionMatrixs=reportService.getDesionMatrixs(from, to);
 		if(datechange.getFrom2()!=null) {
 			Date from2=datechange.getFrom2();
 			Date to2=datechange.getTo2();
 			int comparedRevenue= dashBoardService.comparedRevenue( from2, to2,from, to);
 			int comparedOrder= dashBoardService.comparedOrder(from2, to2,from, to);
 			int comparedCustomer= dashBoardService.comparedCustomer(from2, to2,from, to);
-			DashBoardOverview db= new DashBoardOverview(revenue,order,customer,comparedRevenue,comparedOrder,comparedCustomer,data1.keySet(),data1.values(),data2.values(),datanv.keySet(),datanv.values(),dataproduct.keySet(),dataproduct.values());
+			DashBoardOverview db= new DashBoardOverview(revenue,order,customer,comparedRevenue,comparedOrder,comparedCustomer,data1.keySet(),data1.values(),data2.values(),datanv.keySet(),datanv.values(),dataproduct.keySet(),dataproduct.values(),data0revenue,data0nv,data0product,sizeTb,desionMatrixs);
 			return db;
 		}
-		DashBoardOverview db= new DashBoardOverview(revenue,order,customer,200000,200000,200000,data1.keySet(),data1.values(),data2.values(),datanv.keySet(),datanv.values(),dataproduct.keySet(),dataproduct.values());
+		DashBoardOverview db= new DashBoardOverview(revenue,order,customer,200000,200000,200000,data1.keySet(),data1.values(),data2.values(),datanv.keySet(),datanv.values(),dataproduct.keySet(),dataproduct.values(),data0revenue,data0nv,data0product,sizeTb,desionMatrixs);
 		return db;
 		
 		

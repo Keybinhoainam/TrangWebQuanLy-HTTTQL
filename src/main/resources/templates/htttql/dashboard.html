@@ -40,128 +40,6 @@
 
 <body class="nav-md">
 
-	<!-- <div id="testWebSoket">
-	  	<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-		  <script
-			src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-	  	<script type = "text/javascript">
-      	var config = {
-    			type : 'line',
-    			data : {
-    				labels : [],
-    				datasets : [ {
-    					label : 'Temperature',
-    					backgroudColor : 'rgb(255, 99, 132)',
-    					borderColor : 'rgb(255, 99, 132)',
-    					data : [],
-    					fill : false
-
-    				} ]
-    			},
-    			options : {
-    				responsive : true,
-    				title : {
-    					display : true,
-    					text : 'Memory'
-    				},
-    				tooltips : {
-    					mode : 'index',
-    					intersect : false
-    				},
-    				hover : {
-    					mode : 'nearest',
-    					intersect : true
-    				},
-    				scales : {
-    					xAxes : [ {
-    						display : true,
-    						type : 'time',
-    						time : {
-    							displayFormats : {
-    								quarter : 'h:mm:ss'
-    							}
-    						},
-    						scaleLabel : {
-    							display : true,
-    							labelString : 'Time'
-    						}
-    					} ],
-    					yAxes : [ {
-    						display : true,
-    						scaleLabel : {
-    							display : true,
-    							labelString : 'Value'
-    						}
-    					} ]
-    				}
-    			}
-    		};
-      	
-      	$(document).ready(function() {
-        	var ctx = document.getElementById('lineChart').getContext('2d');
-     		window.myLine = new Chart(ctx, config);
-     		
-            if ("WebSocket" in window) {
-               alert("WebSocket is supported by your Browser!");
-               
-               // Let us open a web socket
-               var ws = new WebSocket("ws://localhost:8080/myhandler");
-				
-               ws.onopen = function() {
-                  
-                  // Web Socket is connected, send data using send()
-                  //ws.send("Hello");
-                  //alert("Message is sent..."+ "Hello");
-                  setInterval( function() {
-                      // Send only if the buffer is not full
-                	  ws.send("Data is updating...");
-                   }, 1000*10);
-               };
-				
-               ws.onmessage = function (evt) { 
-//                   var received_msg = evt.data;
-//                   alert("Message is received..."+received_msg);
-                  config.data.labels.push(new Date());
-  				/* Push new data on Y-Axis of chart */
-	  				config.data.datasets.forEach(function(dataset) {
-	  					dataset.data.push(evt.data);
-	  				});
-	  				window.myLine.update();
-               };
-				
-               ws.onclose = function() { 
-                  
-                  // websocket is closed.
-                  alert("Connection is closed..."); 
-               };
-            } else {
-              
-               // The browser doesn't support WebSocket
-               alert("WebSocket NOT supported by your Browser!");
-            }
-         });
-      </script>
-	  <div class="alert alert-danger" role="alert" style="width:300px;margin-left:40%;margin-top:10px;">
-		<p class="text-center">Current Temperature : <b id="temperature">0</b></p>
-	  </div>
-	  <div class="model">
-		<div class="modal-dialog" style="width:80%;height:auto">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Temperature</h5>
-				</div>
-				<div class="model-body">
-					<div class="container" style="width:80%">
-						<canvas id="lineChart"></canvas>
-					</div>
-				</div>
-			</div>
-		</div>
-	  </div>
-     
-	</div> -->
 
 	<div class="container body">
 
@@ -176,10 +54,18 @@
 			<!-- page content -->
 
 			<div class="right_col" role="main">
-				<div class="row" style="display: flex">
+				<div class="row" style="display: block">
 					<h2><a th:href="@{/dashboard}"><i class="fa fa-dashboard"
 								style="margin-bottom: 10px;padding: 10px 17px;"></i> Dashboard</a></h2>
 
+
+
+				</div>
+				<div class="row">
+
+					<div class="col-3">
+						<button class="btn btn-success" onclick="exportCustomDate()">Xuất Excel</button>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-6">
@@ -197,12 +83,12 @@
 
 
 					</div>
+
 					<div class="col-6">
 						<script src="/js/bhn.js" type="text/javascript"></script>
 						<select class="form-control col-5" id="selectCustomDate"
 							style="display:inline; padding-right: 10px; border-radius: 10px;margin-left: 10px;"
 							onchange="selectCustomDate()">
-							<option value="0">Select:</option>
 							<option value="1">Today</option>
 							<option value="2">This Month</option>
 							<option value="3">This Year</option>
@@ -211,11 +97,55 @@
 							<option value="6">Last Year</option>
 							<option value="7">Custom</option>
 						</select>
+
+						<!-- <button data-modal-target="#nmodal2" class="btn btn-success"
+							style="border-radius: 50px;border: 0px;">
+							Decision Matrix
+						</button>
+						<div class="nmodal2" id="nmodal2">
+							<div class="nmodal2-header">
+								<div class="title">Decision Matrix</div>
+								<button data-close-button class="close-button">&times;</button>
+							</div>
+							<div class="nmodal2-body" id="nmodal-body2">
+				
+								<div class="panel-group" id="panel-group2">
+									
+
+								</div>
+							</div>
+						</div> -->
+
+						<button data-modal-target="#nmodal" class="ringing-bell"
+							style="background-color: white;width: fit-content;border-radius: 50px;border: 0px;">
+							<i class='fa fa-bell faa-ring animated fa-2x'></i>
+							<span class="badge bg-green" id="sizeTb">?</span>
+						</button>
+						<div class="nmodal" id="nmodal">
+							<div class="nmodal-header">
+								<div class="title">Notification</div>
+								<button data-close-button class="close-button">&times;</button>
+							</div>
+							<div class="nmodal-body" id="nmodal-body">
+								<!-- <div class="row nrow-modal-body">
+									<i class="fa fa-exclamation-triangle nrow-modal-body-icon" aria-hidden="true"></i>
+									<span class="nrow-modal-body-content">Daily Revenue</span>
+								</div>
+								<div class="row nrow-modal-body">
+									<i class="fa fa-exclamation-triangle nrow-modal-body-icon" aria-hidden="true"></i>
+									<span class="nrow-modal-body-content">Daily Revenue</span>
+								</div> -->
+								<div class="panel-group" id="panel-group">
+									
+
+								</div>
+							</div>
+						</div>
 					</div>
 
 				</div>
 				<div class="row" style="display: flex; background-color: white;">
-					<h2 style=""><i class="fa fa-bar-chart-o" style="padding: 10px 17px;"></i> OverView</h2>
+					<h2><i class="fa fa-bar-chart-o" style="padding: 10px 17px;"></i> OverView</h2>
 					<div class="tile_count col-md-12 col-sm-12"
 						style="border-top: 1px dashed #ddd; padding-top: 10px;margin-top: 0px;">
 						<a class="col-md-4 col-sm-4  tile_stats_count" href="#">
@@ -286,72 +216,25 @@
 												</div>
 											</div>
 											<div class="x_content" style="padding: 0 3px 6px 0px; margin-top: 0px;">
-												<script
-													src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-												<script
-													src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 												<script src="https://code.highcharts.com/highcharts.js"></script>
 												<script src="https://code.highcharts.com/modules/exporting.js"></script>
 												<div id="container1"></div>
 											</div>
 										</div>
-										<script
-											src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-										<!-- Latest compiled and minified JavaScript -->
-										<script
-											src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-										<script src="https://code.highcharts.com/highcharts.js"></script>
-										<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 
 									</div>
 								</div>
 								<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 									<div class="dashboard_graph" style="padding:0px">
 										<div class="nreport" style="margin-bottom: 100px;">
-											<!-- <div class="row x_title2">
-												<div class="col-md-6">
-													<h3 style="margin-left: 10px">Report by Month</h3>
-												</div>
-											</div>
-											<div class="x_content" style="padding: 0 3px 6px 0px; margin-top: 0px;">
-												<div id="container2"></div>
-											</div> -->
 											<div class="x_title">
-
-												<h2><a class="fa fa-bar-chart"></a> Revenue By Employees</h2>
-												<ul class="nav navbar-right panel_toolbox">
-
-													<li class="dropdown">
-														<a href="#" data-toggle="dropdown" role="button"
-															aria-expanded="false"><i class="fa fa-wrench"></i></a>
-														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-															<a class="dropdown-item" href="#">View more</a>
-															<a class="dropdown-item close-link">Close</a>
-														</div>
-													</li>
-													<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-													</li>
-												</ul>
-												<div class="clearfix"></div>
 											</div>
 											<div class="x_content">
-												<script src="https://code.highcharts.com/highcharts.js"></script>
-												<script src="https://code.highcharts.com/modules/data.js"></script>
-												<script src="https://code.highcharts.com/modules/exporting.js"></script>
-												<div id="ndbtopnv" ></div>
-
+												<div id="ndbtopnv"></div>
 											</div>
 										</div>
-
-
-
-										<script
-											src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-										<!-- Latest compiled and minified JavaScript -->
-										<script
-											src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-										<script src="https://code.highcharts.com/highcharts.js"></script>
-										<script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 									</div>
 								</div>
@@ -359,79 +242,13 @@
 									<div class="dashboard_graph" style="padding:0px">
 										<div class="nreport">
 											<div class="x_title">
-
-												<h2><a class="fa fa-bar-chart"></a> Quantity by Products</h2>
-												<ul class="nav navbar-right panel_toolbox">
-
-													<li class="dropdown">
-														<a href="#" data-toggle="dropdown" role="button"
-															aria-expanded="false"><i class="fa fa-wrench"></i></a>
-														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-															<a class="dropdown-item" href="#">View more</a>
-															<a class="dropdown-item close-link">Close</a>
-														</div>
-													</li>
-													<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-													</li>
-												</ul>
-												<div class="clearfix"></div>
 											</div>
 											<div class="x_content">
-												<script src="https://code.highcharts.com/highcharts.js"></script>
-												<script src="https://code.highcharts.com/modules/data.js"></script>
-												<script src="https://code.highcharts.com/modules/exporting.js"></script>
 												<div id="ndbproducts"></div>
 
 											</div>
 										</div>
 
-
-										<script
-											src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-										<!-- Latest compiled and minified JavaScript -->
-										<script
-											src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-										<script src="https://code.highcharts.com/highcharts.js"></script>
-										<script src="https://code.highcharts.com/modules/exporting.js"></script>
-										<script th:inline="javascript">
-											Highcharts.chart('container3', {
-												chart: {
-													type: 'column'
-												},
-												title: {
-													text: 'Quantity Sales'
-												},
-												xAxis: {
-													categories: [[${ salesQuantityKey }]],
-													crosshair: true
-												},
-												yAxis: {
-													min: 0,
-													title: {
-														text: ''
-													}
-												},
-												tooltip: {
-													headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-													pointFormat: '<tr><td style="color:{series.color};padding:0"></td>' +
-														'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-													footerFormat: '</table>',
-													shared: true,
-													useHTML: true
-												},
-												plotOptions: {
-													column: {
-														pointPadding: 0.2,
-														borderWidth: 0
-													}
-												},
-												series: [{
-													name: "Quantity Sales",
-													data: [[${ salesQuantityValue }]]
-
-												}]
-											});
-										</script>
 									</div>
 								</div>
 							</div>
@@ -441,47 +258,13 @@
 
 
 				</div>
+				<div id="noverlay"></div>
 
-				<!-- <div class="row">
-					<div class="col-md-6 col-sm-6 ">
-						<div class="x_panel">
-							<div class="x_title">
 
-								<h2><a class="fa fa-bar-chart"></a> Revenue By Employees</h2>
-								<ul class="nav navbar-right panel_toolbox">
-
-									<li class="dropdown">
-										<a href="#" data-toggle="dropdown" role="button" aria-expanded="false"><i
-												class="fa fa-wrench"></i></a>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#">View more</a>
-											<a class="dropdown-item close-link">Close</a>
-										</div>
-									</li>
-									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-									</li>
-								</ul>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content">
-								<script src="https://code.highcharts.com/highcharts.js"></script>
-								<script src="https://code.highcharts.com/modules/data.js"></script>
-								<script src="https://code.highcharts.com/modules/exporting.js"></script>
-								<div id="ndbtopnv"></div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-sm-6 ">
-						<div class="x_panel">
-							
-						</div>
-					</div>
-
-				</div> -->
-				
 			</div>
+
 		</div>
+
 
 
 
@@ -499,29 +282,21 @@
 	<!-- /footer content -->
 	</div>
 	</div>
-
+	
 	<!-- jQuery -->
 	<script src="/vendors/jquery/dist/jquery.min.js"></script>
-	<!-- Bootstrap -->
-
-	<!-- FastClick -->
-	<script src="/vendors/fastclick/lib/fastclick.js"></script>
-	<!-- NProgress -->
-	<script src="/vendors/nprogress/nprogress.js"></script>
-	<!-- DateJS -->
-	<script src="/vendors/DateJS/build/date.js"></script>
-	<!-- bootstrap-daterangepicker -->
-
 	<!-- Custom Theme Scripts -->
 	<script src="/build/js/custom.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+	<script defer src="/js/bhn2.min.js"></script>
 	<script src="/js/bhn.min.js" type="text/javascript"></script>
 	<script>
 		init();
 	</script>
-	
+	<!-- <script src="/vendors/custom/js/exportExcel.js"></script>
+	<script src="/vendors/custom/js/exceljs.min.js"></script>
+	<script src="/vendors/custom/js/FileSaver.min.js"></script> -->
 </body>
 
 </html>

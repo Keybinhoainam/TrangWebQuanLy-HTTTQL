@@ -42,6 +42,8 @@ public class SanPhamServiceImpl implements SanPhamService{
 	SanPhamResponsitory sanPhamResponsitory;
 	@Autowired
 	ChiTietHoaDonBanRespository chiTietHoaDonBanRespository;
+	@Autowired
+	ChiTietHoaDonNhapRespository chiTietHoaDonNhapRespository;
 //	@Autowired
 //	HoaDonNhapR
 	public SanPhamServiceImpl() {
@@ -61,6 +63,15 @@ public class SanPhamServiceImpl implements SanPhamService{
 		List<ChiTietHoaDonBan> list=chiTietHoaDonBanRespository.findBySanPhamDay(sp.getId(),from,to);
 		int count=0;
 		for(ChiTietHoaDonBan t: list) {
+			count+=t.getSoLuong();
+		}
+		return count;
+	}
+	@Override
+	public int getQuantityTonKhoByDay(SanPham sp) {
+		List<ChiTietHDNhap> list=chiTietHoaDonNhapRespository.findBySanPham(sp.getId());
+		int count=0;
+		for(ChiTietHDNhap t: list) {
 			count+=t.getSoLuong();
 		}
 		return count;

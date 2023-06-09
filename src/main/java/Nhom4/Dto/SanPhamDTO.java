@@ -22,6 +22,8 @@ public class SanPhamDTO {
 	boolean baoHanh;
 	int soLuong;
 	float donGia;
+	String doHot;
+	String loai;
 	private Set<ChiTietHDNhapDTO> listHoaDonNhap;
 	private Set<chiTietHoaDonBanDTO> listChiTietHoaDonBan;
 	
@@ -102,6 +104,18 @@ public class SanPhamDTO {
 	}
 	public void setImageFile(MultipartFile imageFile) {
 		this.imageFile = imageFile;
+	}
+	public String getDoHot() {
+		return doHot;
+	}
+	public void setDoHot(String doHot) {
+		this.doHot = doHot;
+	}
+	public String getLoai() {
+		return loai;
+	}
+	public void setLoai(String loai) {
+		this.loai = loai;
 	}
 	
 	

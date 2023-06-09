@@ -375,6 +375,11 @@
 
                                                             <div class="row">
                                                                 <div class="col-sm-12">
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+
                                                                     <table id="datatable-keytable"
                                                                         class="product_tbl table table-striped table-bordered dataTable no-footer"
                                                                         style="width: 100%;" role="grid"
@@ -386,25 +391,37 @@
                                                                                     rowspan="1" colspan="1"
                                                                                     aria-sort="ascending"
                                                                                     aria-label="Name: activate to sort column descending"
-                                                                                    style="width: 120px;">Mã SP
+                                                                                    style="width: 10%;">Mã SP
                                                                                 </th>
                                                                                 <th class="sorting" tabindex="0"
                                                                                     aria-controls="datatable"
                                                                                     rowspan="1" colspan="1"
                                                                                     aria-label="Position: activate to sort column ascending"
-                                                                                    style="width: 250px;">Tên SP
+                                                                                    style="width: 30%;">Tên SP
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0"
+                                                                                    aria-controls="datatable"
+                                                                                    rowspan="1" colspan="1"
+                                                                                    aria-label="Position: activate to sort column ascending"
+                                                                                    style="width: 20%">Loại SP
                                                                                 </th>
                                                                                 <th class="sorting" tabindex="0"
                                                                                     aria-controls="datatable"
                                                                                     rowspan="1" colspan="1"
                                                                                     aria-label="Office: activate to sort column ascending"
-                                                                                    style="width: 120px">Đơn giá
+                                                                                    style="width: 15%">Đơn giá
+                                                                                </th>
+                                                                                <th class="sorting" tabindex="0"
+                                                                                    aria-controls="datatable"
+                                                                                    rowspan="1" colspan="1"
+                                                                                    aria-label="Office: activate to sort column ascending"
+                                                                                    style="width: 20%">Độ hot
                                                                                 </th>
                                                                                 <th class="sorting" tabindex="0"
                                                                                     aria-controls="datatable"
                                                                                     rowspan="1" colspan="1"
                                                                                     aria-label="Age: activate to sort column ascending"
-                                                                                    style="width: 90px;">Còn lại
+                                                                                    style="width: 5%;">Còn lại
                                                                                 </th>
                                                                                 <th class="sorting" tabindex="0"
                                                                                     aria-controls="datatable"
@@ -422,9 +439,11 @@
                                                                                 <td class="sorting_1"
                                                                                     th:text="${sp.id}"></td>
                                                                                 <td th:text="${sp.ten}"></td>
+                                                                                <td th:text="${sp.loai}"></td>
                                                                                 <td
                                                                                     th:text="'$ '+${#numbers.formatDecimal(sp.donGia, 0, 2)}">
                                                                                 </td>
+                                                                                <td th:text="${sp.doHot}"></td>
                                                                                 <td th:text="${sp.soLuong}"></td>
                                                                                 <td>
                                                                                     <button
@@ -469,6 +488,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div id="noverlay"></div>
                                                     </div>
                                                     <div id="step-3" class="content" style="">
                                                         <h2 class="StepTitle">Step 3 Discount</h2>
@@ -558,6 +578,7 @@
 
     <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
     <script src="/build/js/custom.min.js"></script>
+    <script defer src="/js/bhn2.min.js"></script>
 </body>
 
 </html>

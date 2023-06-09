@@ -19,5 +19,8 @@ public interface ChiTietHoaDonBanRespository extends JpaRepository<ChiTietHoaDon
 	List<ChiTietHoaDonBan> findBySanPham(Long id);
 	@Query("select p from ChiTietHoaDonBan p where p.sanPham.id = ?1 and p.hoaDonBan.ngayBan >= ?2 and p.hoaDonBan.ngayBan <= ?3")
 	List<ChiTietHoaDonBan> findBySanPhamDay(Long id,Date from,Date to);
-	
+//	@Query("Select a from ChiTietHoaDonBan a where a.hoaDonBan.id = ?1 ORDER BY a.hoaDonBan.ngayBan DESC;")
+//    List<ChiTietHoaDonBan> findByHoadonbanDesc(Long id);
+	@Query("select p from ChiTietHoaDonBan p where p.sanPham.id = ?1 and p.hoaDonBan.id = ?2")
+	Optional<ChiTietHoaDonBan> findBySanPhamHoadonBan(Long id,Long id2);
 }

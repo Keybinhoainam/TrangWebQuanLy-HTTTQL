@@ -1,8 +1,10 @@
 package Nhom4.Dto;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 
 public class DashBoardOverview {
 	Float revenue;
@@ -18,6 +20,13 @@ public class DashBoardOverview {
 	Collection<Float> datanNvValue;
 	Set<String> dataProductKey;
 	Collection<Integer> datanProductValue;
+	List<String> data0revenue;
+	List<String> data0nv;
+	List<String> data0sales;
+	int sizeTb;
+	List<DesionMatrix> desionMatrixs;
+	
+	
 	public DashBoardOverview() {
 		super();
 	}
@@ -179,6 +188,131 @@ public class DashBoardOverview {
 	public void setDataProductKey(Set<String> dataProductKey) {
 		this.dataProductKey = dataProductKey;
 	}
+
+	public DashBoardOverview(Float revenue, int orders, int customer, int comparedRevenue, int comparedOrder,
+			int comparedCustomer, Set<String> dataKey, Collection<Integer> dataValue1, Collection<Integer> dataValue2,
+			Set<String> dataNvKey, Collection<Float> datanNvValue, Set<String> dataProductKey,
+			Collection<Integer> datanProductValue, List<String> data0revenue, List<String> data0sales,
+			List<String> data0nv) {
+		super();
+		this.revenue = revenue;
+		this.orders = orders;
+		this.customer = customer;
+		this.comparedRevenue = comparedRevenue;
+		this.comparedOrder = comparedOrder;
+		this.comparedCustomer = comparedCustomer;
+		this.dataKey = dataKey;
+		this.dataValue1 = dataValue1;
+		this.dataValue2 = dataValue2;
+		this.dataNvKey = dataNvKey;
+		this.datanNvValue = datanNvValue;
+		this.dataProductKey = dataProductKey;
+		this.datanProductValue = datanProductValue;
+		this.data0revenue = data0revenue;
+		this.data0sales = data0sales;
+		this.data0nv = data0nv;
+	}
+
+	public List<String> getData0revenue() {
+		return data0revenue;
+	}
+
+	public void setData0revenue(List<String> data0revenue) {
+		this.data0revenue = data0revenue;
+	}
+
+	public List<String> getData0sales() {
+		return data0sales;
+	}
+
+	public void setData0sales(List<String> data0sales) {
+		this.data0sales = data0sales;
+	}
+
+	public List<String> getData0nv() {
+		return data0nv;
+	}
+
+	public void setData0nv(List<String> data0nv) {
+		this.data0nv = data0nv;
+	}
+
+	
+
+	public DashBoardOverview(Float revenue, int orders, int customer, int comparedRevenue, int comparedOrder,
+			int comparedCustomer, Set<String> dataKey, Collection<Integer> dataValue1, Collection<Integer> dataValue2,
+			Set<String> dataNvKey, Collection<Float> datanNvValue, Set<String> dataProductKey,
+			Collection<Integer> datanProductValue, List<String> data0revenue, List<String> data0nv,
+			List<String> data0sales, int sizeTb) {
+		super();
+		this.revenue = revenue;
+		this.orders = orders;
+		this.customer = customer;
+		this.comparedRevenue = comparedRevenue;
+		this.comparedOrder = comparedOrder;
+		this.comparedCustomer = comparedCustomer;
+		this.dataKey = dataKey;
+		this.dataValue1 = dataValue1;
+		this.dataValue2 = dataValue2;
+		this.dataNvKey = dataNvKey;
+		this.datanNvValue = datanNvValue;
+		this.dataProductKey = dataProductKey;
+		this.datanProductValue = datanProductValue;
+		this.data0revenue = data0revenue;
+		this.data0nv = data0nv;
+		this.data0sales = data0sales;
+		this.sizeTb = sizeTb;
+	}
+
+	public int getSizeTb() {
+		return sizeTb;
+	}
+
+	public void setSizeTb(int sizeTb) {
+		this.sizeTb = sizeTb;
+	}
+
+	public DashBoardOverview(Float revenue, int orders, int customer, int comparedRevenue, int comparedOrder,
+			int comparedCustomer, Set<String> dataKey, Collection<Integer> dataValue1, Collection<Integer> dataValue2,
+			Set<String> dataNvKey, Collection<Float> datanNvValue, Set<String> dataProductKey,
+			Collection<Integer> datanProductValue, List<String> data0revenue, List<String> data0nv,
+			List<String> data0sales, int sizeTb, List<DesionMatrix> desionMatrixs) {
+		super();
+		this.revenue = revenue;
+		this.orders = orders;
+		this.customer = customer;
+		this.comparedRevenue = comparedRevenue;
+		this.comparedOrder = comparedOrder;
+		this.comparedCustomer = comparedCustomer;
+		this.dataKey = dataKey;
+		this.dataValue1 = dataValue1;
+		this.dataValue2 = dataValue2;
+		this.dataNvKey = dataNvKey;
+		this.datanNvValue = datanNvValue;
+		this.dataProductKey = dataProductKey;
+		this.datanProductValue = datanProductValue;
+		this.data0revenue = data0revenue;
+		this.data0nv = data0nv;
+		this.data0sales = data0sales;
+		this.sizeTb = sizeTb;
+		this.desionMatrixs = desionMatrixs;
+	}
+
+	public List<DesionMatrix> getDesionMatrixs() {
+		return desionMatrixs;
+	}
+
+	public void setDesionMatrixs(List<DesionMatrix> desionMatrixs) {
+		this.desionMatrixs = desionMatrixs;
+	}
+
+	
+
+	
+
+	
+	
+	
 	
 	
 
