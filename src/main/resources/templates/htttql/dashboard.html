@@ -98,7 +98,7 @@
 							<option value="7">Custom</option>
 						</select>
 
-						<!-- <button data-modal-target="#nmodal2" class="btn btn-success"
+						<button data-modal-target="#nmodal2" class="btn btn-success"
 							style="border-radius: 50px;border: 0px;">
 							Decision Matrix
 						</button>
@@ -108,13 +108,17 @@
 								<button data-close-button class="close-button">&times;</button>
 							</div>
 							<div class="nmodal2-body" id="nmodal-body2">
-				
+								<div class="row">
+									<h2>Hệ số thời gian: </h2><input type="number" id="hsTg" value="1" onchange="sortTable(5)">
+									<h2>Hệ số số lượng bán: </h2><input type="number" id="hsSales" value="1" onchange="sortTable(5)">
+									<h2>Hệ số số lượng tồn kho: </h2><input type="number" id="hsTonKho" value="1" onchange="sortTable(5)">
+								</div>
 								<div class="panel-group" id="panel-group2">
 									
 
 								</div>
 							</div>
-						</div> -->
+						</div>
 
 						<button data-modal-target="#nmodal" class="ringing-bell"
 							style="background-color: white;width: fit-content;border-radius: 50px;border: 0px;">
@@ -294,9 +298,9 @@
 	<script>
 		init();
 	</script>
-	<!-- <script src="/vendors/custom/js/exportExcel.js"></script>
+	<script src="/vendors/custom/js/exportExcel.js"></script>
 	<script src="/vendors/custom/js/exceljs.min.js"></script>
-	<script src="/vendors/custom/js/FileSaver.min.js"></script> -->
+	<script src="/vendors/custom/js/FileSaver.min.js"></script>
 </body>
 
 </html>

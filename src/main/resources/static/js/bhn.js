@@ -611,8 +611,14 @@ async function changeDay2(from2, to2, option) {
     var dataTb = document.getElementById("panel-group");
     dataTb.innerHTML= html;
 
-
-    var html2 = `<table class="table table-striped table-inverse " id="tableDM">
+    var hsTg=document.getElementById("hsTg").value;
+    var hsSales=document.getElementById("hsSales").value;
+    var hsTonKho=document.getElementById("hsTonKho").value;
+    console.log(hsTg+ " "+hsSales+ " "+hsTonKho);
+    
+    var html2 = `
+    
+    <table class="table table-striped table-inverse " id="tableDM">
     <thead class="thead-inverse">
       <tr>
       <th></th>
@@ -626,6 +632,8 @@ async function changeDay2(from2, to2, option) {
     </thead>
     <tbody>`;
     for(var i=0;i<data.desionMatrixs.length;i++){
+      var u=hsTg*data.desionMatrixs[i].gtTG + hsSales*data.desionMatrixs[i].soLuongBan + hsTonKho*data.desionMatrixs[i].soLuongTonKho;
+      
       html2+=`<tr>
       <td></td>
       <td>${data.desionMatrixs[i].ten}</td>
@@ -633,13 +641,14 @@ async function changeDay2(from2, to2, option) {
       <td>${data.desionMatrixs[i].thoiGianRaMat}</td>
       <td>${data.desionMatrixs[i].soLuongBan}</td>
       <td >${data.desionMatrixs[i].soLuongTonKho}</td>
-      <td></td>
+      <td>${u}</td>
       </tr>`
     }
     html2 += `</tbody>
     </table>`;
     var content = document.getElementById("panel-group2");
     content.innerHTML= html2;
+    
   }
 }
 
@@ -649,6 +658,7 @@ function requestData(from2, to2, option) {
     changeDay(from2, to2, option);
   }, 1000);
   changeDay2(from2, to2, option);
+  sortTable(5);
 }
 function updateChart(chartUp, dataKey, dataKey) {
   // chart1.xAxis.update({ categories: dataKey });
@@ -828,7 +838,7 @@ function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("tableDM");
   switching = true;
-  dir = "asc"; 
+  dir = "desc"; 
   while (switching) {
     switching = false;
     rows = table.rows;
@@ -836,13 +846,17 @@ function sortTable(n) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
+      var nux= new Number(x.innerHTML.toLowerCase());
+      var nuy= new Number(y.innerHTML.toLowerCase());
       if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        
+        if ( nux>nuy) {
           shouldSwitch= true;
           break;
         }
       } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+
+        if (nux <nuy) {
           shouldSwitch = true;
           break;
         }

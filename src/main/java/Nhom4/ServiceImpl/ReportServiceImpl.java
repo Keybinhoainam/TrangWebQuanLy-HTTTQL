@@ -71,9 +71,9 @@ public class ReportServiceImpl implements ReportService {
 			BeanUtils.copyProperties(sp, spdto);
 			spdto.setLoai(sp.getDanhMucSanPham().getTen());
 //			System.out.println(spdto.getTen()+" ///"+spdto.getLoai());
-			Long gtTG=(from.getTime()-to.getTime())/ (1000 * 60 * 60 * 24);
-			double gtsales=getQuantityBySalesDay(sp,from,to)/TongGtsales*100;
-			double gtTonKho=getQuantityTonKho(sp)/TongGTTonKho *100;
+			Long gtTG=(-from.getTime()+to.getTime())/ (1000 * 60 * 60 * 24);
+			double gtsales=(TongGtsales>0)?getQuantityBySalesDay(sp,from,to)/TongGtsales*100:0;
+			double gtTonKho=(TongGTTonKho>0)?getQuantityTonKho(sp)/TongGTTonKho *100:0;
 			DesionMatrix desionMatrix= new DesionMatrix(spdto.getTen(),spdto.getLoai(),getTgRaMat(sp.getId()),getQuantityBySalesDay(sp,from,to),getTonKho(sp),gtTG,gtsales,gtTonKho);
 			list.add(desionMatrix);
 		}
